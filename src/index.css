@@ -1,1 +1,14 @@
 @import 'tailwindcss';
+
+@theme {
+  --color-sjz-red-main: #ff3156;
+  --color-sjz-red-bright: #ffb3c1;
+  --color-sjz-yellow: #fff9e5;
+  --color-sjz-blue: #3b82f6;
+}
+
+@layer utilities {
+  .sjz-width {
+    width: 393px;
+  }
+}

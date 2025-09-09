@@ -10,5 +10,11 @@ export default defineConfig([
     extends: ['js/recommended'],
     languageOptions: { globals: { ...globals.browser, ...globals.node } },
   },
-  pluginReact.configs.flat.recommended,
+  {
+    ...pluginReact.configs.flat.recommended,
+    rules: {
+      ...pluginReact.configs.flat.recommended.rules,
+      'react/prop-types': 'off',
+    },
+  },
 ]);
