@@ -1,4 +1,4 @@
-export const Button = ({ onClick, disabled, buttonText, className }) => {
+export const Button = ({ onClick, disabled, buttonText, className, icon }) => {
   return (
     <button
       className={`
@@ -13,6 +13,7 @@ export const Button = ({ onClick, disabled, buttonText, className }) => {
       onClick={onClick}
       disabled={disabled}
     >
+      {icon && <img src={icon} alt='icon' className='w-6 h-6 mr-2' />}
       {buttonText}
     </button>
   );
