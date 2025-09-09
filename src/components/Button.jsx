@@ -1,20 +1,23 @@
-export const Button = ({ onClick, disabled, buttonText, className, icon }) => {
+export const Button = ({ icon, onClick, disabled, className, children }) => {
   return (
     <button
       className={`
-        cursor-pointer px-6 py-3
-        text-white rounded-xl
-        transition-all duration-200
-        focus:outline-none focus:ring-2 focus:ring-sjz-red-main focus:ring-offset-2
-        disabled:opacity-50 disabled:cursor-not-allowed
         flex items-center justify-center
+        w-70 h-12
+        py-3
+        rounded-xl
+        transition-all duration-200
+        disabled:opacity-50 disabled:cursor-not-allowed
+        cursor-pointer
         ${className}
       `}
       onClick={onClick}
       disabled={disabled}
     >
-      {icon && <img src={icon} alt='icon' className='w-6 h-6 mr-2' />}
-      {buttonText}
+      <div className='flex items-center pr-2'>
+        <img src={icon} alt={icon} className='w-6 h-6' />
+      </div>
+      <span className='text-white text-center'>{children}</span>
     </button>
   );
 };
