@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import FeatureCards from './components/FeatureCards';
+import StepSection from './components/StepSection';
 import { Button } from '../../components/Button';
+import FeatureSection from './components/FeatureSection';
 
 const RegisterHeader = () => {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ export default function RegisterPage() {
         <div className='flex flex-col gap-y-2 py-2 w-full items-center'>
           <Button
             onClick={handleRegister}
-            className={'bg-gradient-to-br from-sjz-red-main to-[#F472B6]'}
+            className='bg-sjz-red-main'
             icon='/icons/register.svg'
           >
             가족 프로필 등록하기
@@ -75,7 +76,13 @@ export default function RegisterPage() {
             </div>
           </div>
         </div>
-        <FeatureCards />
+        <StepSection />
+        <div className='flex flex-col items-center my-4'>
+          <div className='text-xl font-bold py-2'>
+            등록하면 이런 점이 좋아요
+          </div>
+          <FeatureSection />
+        </div>
       </div>
     </>
   );
