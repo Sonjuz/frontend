@@ -4,7 +4,7 @@ import DefaultLayout from './components/DefaultLayout';
 import React from 'react';
 
 const HomePage = lazy(() => import('./pages/Home/HomePage.jsx'));
-const ProfilePage = lazy(() => import('./pages/Profile/ProfilePage.jsx'));
+const RegisterPage = lazy(() => import('./pages/Register/RegisterPage.jsx'));
 const VoicePhishingPage = lazy(
   () => import('./pages/Scenario/VoicePhishingPage.jsx')
 );
@@ -18,8 +18,8 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       {
-        path: 'profile',
-        element: <ProfilePage />,
+        path: 'register',
+        element: <RegisterPage />,
       },
       {
         path: 'scenario/voice',

@@ -8,7 +8,7 @@ export default function HomePage() {
   const navigate = useNavigate();
 
   const handleStart = () => {
-    navigate('/profile');
+    navigate('/register');
   };
 
   return (
