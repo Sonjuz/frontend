@@ -12,7 +12,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className='flex flex-col h-full bg-white items-center'>
+    <div className='flex flex-col h-full items-center'>
       <HomeHeader />
       <div className='flex flex-col items-center justify-between h-full my-8'>
         <Bookshelf books={TEMP_SCENARIOS} />

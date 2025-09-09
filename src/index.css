@@ -11,4 +11,10 @@
   .sjz-width {
     width: 393px;
   }
+
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
