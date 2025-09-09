@@ -1,7 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../../components/Button';
-import { SimulationButton } from '../../components/SimulationButton';
 
 const ScenarioDetailHeader = () => {
   const navigate = useNavigate();
@@ -48,7 +47,7 @@ const ScenarioTrySection = () => {
             </div>
           </div>
         </div>
-        <SimulationButton
+        <Button
           icon='/icons/simulate.svg'
           onClick={() => {}}
           className={
@@ -56,7 +55,7 @@ const ScenarioTrySection = () => {
           }
         >
           체험 시작하기
-        </SimulationButton>
+        </Button>
       </div>
     </div>
   );
@@ -83,7 +82,7 @@ const ListeningScenarioSection = () => {
             </div>
           </div>
         </div>
-        <SimulationButton
+        <Button
           icon='/icons/listening.svg'
           onClick={() => {}}
           className={
@@ -91,7 +90,7 @@ const ListeningScenarioSection = () => {
           }
         >
           가족 목소리로 듣기
-        </SimulationButton>
+        </Button>
       </div>
     </div>
   );
