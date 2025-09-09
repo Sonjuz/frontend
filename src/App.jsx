@@ -1,5 +1,11 @@
 import React from 'react';
+import ButtonShowcase from './components/ButtonShowcase.jsx';
+import Layout from './components/Layout.jsx';
 
 export default function App() {
-  return <div className='text-3xl'>App.jsx</div>;
+  return (
+    <Layout>
+      <ButtonShowcase />
+    </Layout>
+  );
 }
