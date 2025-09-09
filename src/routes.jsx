@@ -10,6 +10,9 @@ const VoicePhishingPage = lazy(
 );
 const SmishingPage = lazy(() => import('./pages/Scenario/SmishingPage.jsx'));
 const NewsSummaryPage = lazy(() => import('./pages/News/NewsSummaryPage.jsx'));
+const ScenarioDetailPage = lazy(
+  () => import('./pages/Scenario/ScenarioDetailPage.jsx')
+);
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: 'scenario/smishing',
         element: <SmishingPage />,
+      },
+      {
+        path: 'scenario/detail',
+        element: <ScenarioDetailPage />,
       },
       {
         path: 'news',

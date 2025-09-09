@@ -1,6 +1,16 @@
+import { useNavigate } from 'react-router-dom';
+
 export default function BookItem({ book }) {
+  const navigate = useNavigate();
+
   const handleClick = book => {
-    alert(`${book.title} 클릭`);
+    navigate('/scenario/detail', {
+      state: {
+        scenarioId: book.id,
+        title: book.title,
+        icon: book.icon,
+      },
+    });
   };
 
   return (
