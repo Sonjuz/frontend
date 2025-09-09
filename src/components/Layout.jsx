@@ -2,8 +2,8 @@ import React from 'react';
 
 export default function Layout({ children }) {
   return (
-    <div className='min-h-screen bg-gray-100 flex items-center justify-center'>
-      <div className='sjz-width bg-white shadow-lg rounded-lg overflow-hidden'>
+    <div className='min-h-screen bg-gray-100 flex items-center justify-center p-2'>
+      <div className='w-[393px] h-[753px] bg-white border-4 border-black rounded-4xl overflow-hidden shadow-2xl'>
         {children}
       </div>
     </div>
