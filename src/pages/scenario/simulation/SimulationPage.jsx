@@ -55,6 +55,12 @@ export default function SimulationPage() {
     setSimuationStepsData(SMISHING_SCENARIO.steps);
   }, []);
 
+  useEffect(() => {
+    if (simuationStepsData) {
+      console.log(simuationStepsData[currentStep].messages);
+    }
+  }, [simuationStepsData]);
+
   const handleNext = () => {
     setCurrentStep(prev => prev + 1);
   };
@@ -66,11 +72,14 @@ export default function SimulationPage() {
       <NoticeCard />
       {simuationStepsData &&
         simuationStepsData[currentStep].screen_type === 'call' && (
-          <CallScreen simuationData={simuationStepsData} onNext={handleNext} />
+          <CallScreen
+            simuationData={simuationStepsData[currentStep].messages}
+            onNext={handleNext}
+          />
         )}
       {simuationStepsData &&
         simuationStepsData[currentStep].screen_type === 'message' && (
-          <MessageScreen simuationData={simuationStepsData} />
+          <MessageScreen />
         )}
     </div>
   );
