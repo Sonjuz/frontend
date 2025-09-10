@@ -4,13 +4,13 @@ import { useForm } from 'react-hook-form';
 
 const Notice = () => {
   return (
-    <div className='w-80 p-4 bg-blue-50 rounded-xl flex items-center'>
-      <img src='/icons/notice.svg' alt='info' className='w-5 h-5' />
+    <div className='flex w-80 items-center rounded-xl bg-blue-50 p-4'>
+      <img src='/icons/notice.svg' alt='info' className='h-5 w-5' />
       <div className='ml-3 flex flex-col'>
-        <span className='text-blue-700 text-sm font-medium'>
+        <span className='text-sm font-medium text-blue-700'>
           안전한 사진 보관
         </span>
-        <span className='text-blue-600 text-xs'>
+        <span className='text-xs text-blue-600'>
           등록된 사진은 안전하게 암호화되어 저장됩니다
         </span>
       </div>
@@ -70,8 +70,8 @@ export default function PhotoRegister({ onNextStep }) {
   };
 
   return (
-    <div className='w-80 flex flex-col items-center justify-between h-full'>
-      <div className='flex flex-col items-center justify-center h-full'>
+    <div className='flex h-full w-80 flex-col items-center justify-between'>
+      <div className='flex h-full flex-col items-center justify-center'>
         <div className='mb-8 text-center'>
           <h1 className='mb-4 text-2xl font-bold text-gray-800'>
             프로필 사진을 등록해주세요
@@ -83,10 +83,10 @@ export default function PhotoRegister({ onNextStep }) {
           </p>
         </div>
         <form
-          className='w-full flex flex-col items-center'
+          className='flex w-full flex-col items-center'
           onSubmit={handleNextStep}
         >
-          <label className='relative w-32 h-32 rounded-full flex items-center justify-center overflow-hidden mb-4 cursor-pointer group transition-all duration-200'>
+          <label className='group relative mb-4 flex h-32 w-32 cursor-pointer items-center justify-center overflow-hidden rounded-full transition-all duration-200'>
             <input
               type='file'
               accept='image/*'
@@ -94,13 +94,13 @@ export default function PhotoRegister({ onNextStep }) {
               {...register('photo', { required: true })}
               onChange={handleImageChange}
             />
-            <div className='absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center group-hover:bg-black/30'>
-              <img src='/icons/camera.svg' alt='camera' className='w-8 h-8' />
+            <div className='absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 transition-opacity group-hover:bg-black/30 group-hover:opacity-100'>
+              <img src='/icons/camera.svg' alt='camera' className='h-8 w-8' />
             </div>
-            <div className='w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center'>
+            <div className='flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200'>
               {preview ? (
                 <img
-                  className='w-full h-full object-cover'
+                  className='h-full w-full object-cover'
                   src={preview}
                   alt='프로필 사진'
                 />
@@ -109,9 +109,9 @@ export default function PhotoRegister({ onNextStep }) {
                   <img
                     src='/icons/upload.svg'
                     alt='upload'
-                    className='w-8 h-8 mb-2'
+                    className='mb-2 h-8 w-8'
                   />
-                  <span className='text-xs text-gray-500 text-center'>
+                  <span className='text-center text-xs text-gray-500'>
                     클릭하여
                     <br />
                     사진 추가
@@ -120,9 +120,9 @@ export default function PhotoRegister({ onNextStep }) {
               )}
             </div>
           </label>
-          <div className='w-full mb-4 flex items-center justify-center text-sm text-gray-500'>
+          <div className='mb-4 flex w-full items-center justify-center text-sm text-gray-500'>
             {watch('photo')?.name && (
-              <span className='truncate max-w-[200px]'>
+              <span className='max-w-[200px] truncate'>
                 {watch('photo').name}
               </span>
             )}
@@ -134,7 +134,7 @@ export default function PhotoRegister({ onNextStep }) {
         disabled={!watch('photo')?.name}
         type='submit'
         onClick={handleSubmit}
-        className='bg-sjz-red-main w-full h-15 font-bold text-xl disabled:opacity-50 disabled:cursor-not-allowed'
+        className='bg-sjz-red-main h-15 w-full text-xl font-bold disabled:cursor-not-allowed disabled:opacity-50'
       >
         다음
       </Button>

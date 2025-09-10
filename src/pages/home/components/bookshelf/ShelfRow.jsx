@@ -1,13 +1,13 @@
 import BookItem from './BookItem';
 
 const ShelfDivider = () => {
-  return <div className='w-full h-2 bg-amber-800 mt-2 rounded-lg' />;
+  return <div className='mt-2 h-2 w-full rounded-lg bg-amber-800' />;
 };
 
 export default function ShelfRow({ books }) {
   return (
     <div className='flex flex-col items-center'>
-      <div className='flex gap-4 items-center mb-1'>
+      <div className='mb-1 flex items-center gap-4'>
         {books.map(book => (
           <BookItem key={book.id} book={book} />
         ))}

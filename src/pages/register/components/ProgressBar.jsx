@@ -1,8 +1,8 @@
 export const ProgressBar = ({ steps, currentStep = 0 }) => {
   return (
-    <div className='relative w-80 h-12'>
-      <div className='absolute left-0 top-6 w-full h-[1px] bg-gray-200' />
-      <div className='relative w-full h-full flex justify-between items-center'>
+    <div className='relative h-12 w-80'>
+      <div className='absolute top-6 left-0 h-[1px] w-full bg-gray-200' />
+      <div className='relative flex h-full w-full items-center justify-between'>
         {steps.map((step, index) => {
           const isActive = index === currentStep;
           const isCompleted = index < currentStep;
@@ -10,14 +10,14 @@ export const ProgressBar = ({ steps, currentStep = 0 }) => {
           return (
             <div key={index}>
               {isActive ? (
-                <div className='w-12 h-12 rounded-full bg-sjz-red-main/30 flex items-center justify-center'>
-                  <div className='w-9 h-9 rounded-full bg-sjz-red-main flex items-center justify-center'>
-                    <span className='text-white text-xl font-bold'>{step}</span>
+                <div className='bg-sjz-red-main/30 flex h-12 w-12 items-center justify-center rounded-full'>
+                  <div className='bg-sjz-red-main flex h-9 w-9 items-center justify-center rounded-full'>
+                    <span className='text-xl font-bold text-white'>{step}</span>
                   </div>
                 </div>
               ) : (
                 <div
-                  className={`w-6 h-6 rounded-full ${
+                  className={`h-6 w-6 rounded-full ${
                     isCompleted ? 'bg-sjz-red-main' : 'bg-gray-200'
                   }`}
                 />

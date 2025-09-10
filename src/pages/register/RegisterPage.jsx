@@ -16,7 +16,7 @@ const RegisterHeader = () => {
         <img
           src='/icons/back-btn.svg'
           alt='back'
-          className='w-10 h-10 cursor-pointer'
+          className='h-10 w-10 cursor-pointer'
         />
       </button>
       <div className='text-lg font-bold'>가족 등록이란?</div>
@@ -27,16 +27,16 @@ const RegisterHeader = () => {
 const RegisterContent = () => {
   return (
     <div className='flex flex-col'>
-      <div className='flex justify-center w-full items-center'>
-        <div className='w-20 h-20 rounded-full bg-gradient-to-br from-sjz-red-main to-[#F472B6] flex items-center justify-center'>
+      <div className='flex w-full items-center justify-center'>
+        <div className='from-sjz-red-main flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br to-[#F472B6]'>
           <img
             src='/icons/family-detail.svg'
             alt='family-detail'
-            className='w-6 h-6'
+            className='h-6 w-6'
           />
         </div>
       </div>
-      <div className='text-base text-gray-600 text-center my-4'>
+      <div className='my-4 text-center text-base text-gray-600'>
         <div>가족의 사진과 목소리를 등록하면</div>
         <div>보이스피싱 예방 교육을 할 때</div>
         <div>실제 가족의 목소리로 안내를 들을 수 있어요</div>
@@ -57,16 +57,16 @@ export default function RegisterPage() {
       <RegisterHeader />
       <div className='flex flex-col gap-y-2'>
         <RegisterContent />
-        <div className='flex flex-col gap-y-2 py-2 w-full items-center'>
+        <div className='flex w-full flex-col items-center gap-y-2 py-2'>
           <Button
             onClick={handleRegister}
-            className='bg-sjz-red-main text-white font-semibold'
+            className='bg-sjz-red-main font-semibold text-white'
             icon='/icons/register.svg'
           >
             가족 프로필 등록하기
           </Button>
           <div className='mt-2'>
-            <p className='text-center text-base text-gray-500 mb-1'>
+            <p className='mb-1 text-center text-base text-gray-500'>
               등록 과정은 약 3-5분 정도 소요됩니다
             </p>
             <div className='flex items-center justify-center space-x-4 text-sm text-gray-400'>
@@ -79,8 +79,8 @@ export default function RegisterPage() {
           </div>
         </div>
         <StepSection />
-        <div className='flex flex-col items-center my-4'>
-          <div className='text-xl font-bold py-2'>
+        <div className='my-4 flex flex-col items-center'>
+          <div className='py-2 text-xl font-bold'>
             등록하면 이런 점이 좋아요
           </div>
           <FeatureSection />

@@ -9,10 +9,10 @@ export default function VoicePhishingPage() {
   };
 
   return (
-    <div className='flex flex-col items-center justify-center h-full'>
+    <div className='flex h-full flex-col items-center justify-center'>
       <h1>VoicePhishingPage</h1>
       <Button
-        className='bg-sjz-red-main w-80 h-12'
+        className='bg-sjz-red-main h-12 w-80'
         buttonText={'다음'}
         onClick={handleNext}
       />

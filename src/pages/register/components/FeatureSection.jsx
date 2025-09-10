@@ -31,15 +31,15 @@ const FEATURES = [
 
 const FeatureSectionItem = ({ feature }) => {
   return (
-    <div className='flex w-38 h-38 flex-col items-center justify-center bg-white rounded-xl gap-2 shadow-2xl border border-gray-100'>
+    <div className='flex h-38 w-38 flex-col items-center justify-center gap-2 rounded-xl border border-gray-100 bg-white shadow-2xl'>
       <div
-        className='w-10 h-10 rounded-full flex items-center justify-center'
+        className='flex h-10 w-10 items-center justify-center rounded-full'
         style={{ backgroundColor: feature.iconBg }}
       >
-        <img src={feature.icon} alt={feature.title} className='w-6 h-6' />
+        <img src={feature.icon} alt={feature.title} className='h-6 w-6' />
       </div>
       <div className='text-base font-semibold'>{feature.title}</div>
-      <div className='w-30 text-sm text-gray-800 text-center whitespace-pre-line break-keep'>
+      <div className='w-30 text-center text-sm break-keep whitespace-pre-line text-gray-800'>
         {feature.description}
       </div>
     </div>

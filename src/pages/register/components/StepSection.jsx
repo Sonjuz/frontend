@@ -29,18 +29,18 @@ const StepSectionItem = ({ step }) => {
   return (
     <div
       key={step.id}
-      className='flex flex-col p-6 bg-white border border-gray-200 rounded-2xl shadow-xl'
+      className='flex flex-col rounded-2xl border border-gray-200 bg-white p-6 shadow-xl'
     >
       <div className='flex items-start gap-4'>
         <div
-          className='flex justify-center items-center w-12 h-12 rounded-full flex-shrink-0'
+          className='flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full'
           style={{ backgroundColor: step.iconBg }}
         >
           {step.icon}
         </div>
         <div className='flex flex-col gap-2'>
           <h3 className='text-sm font-bold'>{step.title}</h3>
-          <p className='text-sm text-gray-800 whitespace-pre-line break-keep'>
+          <p className='text-sm break-keep whitespace-pre-line text-gray-800'>
             {step.description}
           </p>
         </div>
@@ -51,7 +51,7 @@ const StepSectionItem = ({ step }) => {
 
 export default function StepSection() {
   return (
-    <div className='flex flex-col gap-6 w-80 mx-auto'>
+    <div className='mx-auto flex w-80 flex-col gap-6'>
       {STEPS.map(step => (
         <StepSectionItem key={step.id} step={step} />
       ))}

@@ -19,10 +19,10 @@ const ProfileRegisterHeader = () => {
         <img
           src='/icons/back-btn.svg'
           alt='back'
-          className='w-10 h-10 cursor-pointer'
+          className='h-10 w-10 cursor-pointer'
         />
       </button>
-      <div className='w-full flex'>
+      <div className='flex w-full'>
         <div className='text-lg font-bold'>프로필 설정</div>
       </div>
     </div>
@@ -44,10 +44,10 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className='mx-auto max-w-md p-4 flex flex-col items-center justify-between h-full'>
+    <div className='mx-auto flex h-full max-w-md flex-col items-center justify-between p-4'>
       <ProfileRegisterHeader />
       <ProgressBar steps={steps} currentStep={currentStep} />
-      <div className='flex flex-col items-center justify-between h-full mt-6'>
+      <div className='mt-6 flex h-full flex-col items-center justify-between'>
         {currentStep === 0 && (
           <PhotoRegister
             onNextStep={handleNextStep}

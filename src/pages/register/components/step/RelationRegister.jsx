@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 
 const NoticeCard = () => {
   return (
-    <div className='w-80 p-4 bg-yellow-50 rounded-xl flex items-start'>
-      <div className='w-5 h-5 mt-0.5'>
+    <div className='flex w-80 items-start rounded-xl bg-yellow-50 p-4'>
+      <div className='mt-0.5 h-5 w-5'>
         <svg
           width='20'
           height='20'
@@ -47,23 +47,23 @@ export default function RelationRegister({ onNextStep }) {
   };
 
   return (
-    <div className='w-80 flex flex-col justify-between h-full'>
+    <div className='flex h-full w-80 flex-col justify-between'>
       <div className='text-center'>
         <h1 className='mb-4 text-3xl font-bold text-gray-800'>
           이름과 관계를
           <br />
           알려주세요
         </h1>
-        <p className='text-base text-gray-600 leading-relaxed'>
+        <p className='text-base leading-relaxed text-gray-600'>
           가족들이 친근하게 부르는
           <br />
           이름으로 등록해주세요
         </p>
       </div>
-      <label className='block mb-3 text-lg font-medium text-gray-700'>
+      <label className='mb-3 block text-lg font-medium text-gray-700'>
         이름 (별명)
       </label>
-      <div className='w-full h-14 px-5 bg-white rounded-2xl border-2 border-gray-200 flex items-center focus-within:border-sjz-red-main'>
+      <div className='focus-within:border-sjz-red-main flex h-14 w-full items-center rounded-2xl border-2 border-gray-200 bg-white px-5'>
         <input
           type='text'
           placeholder='예: 영희, 철수, 민수 등'
@@ -71,31 +71,29 @@ export default function RelationRegister({ onNextStep }) {
           {...register('name', { required: true })}
         />
       </div>
-      <label className='block my-4 text-lg font-medium text-gray-700'>
+      <label className='my-4 block text-lg font-medium text-gray-700'>
         가족 관계
       </label>
-      <div className='grid grid-cols-3 gap-3 mb-6'>
+      <div className='mb-6 grid grid-cols-3 gap-3'>
         <button
           onClick={() => handleRelationSelect('아들/딸')}
-          className={`aspect-square p-4 rounded-3xl border-2 flex flex-col items-center justify-center gap-3 transition-all duration-200
-            ${
-              selectedRelation === '아들/딸'
-                ? 'bg-gradient-to-br from-sjz-red-bright/10 to-sjz-red-main/5 border-sjz-red-main shadow-lg'
-                : 'bg-white border-gray-100 hover:border-gray-200'
-            }`}
+          className={`flex aspect-square flex-col items-center justify-center gap-3 rounded-3xl border-2 p-4 transition-all duration-200 ${
+            selectedRelation === '아들/딸'
+              ? 'from-sjz-red-bright/10 to-sjz-red-main/5 border-sjz-red-main bg-gradient-to-br shadow-lg'
+              : 'border-gray-100 bg-white hover:border-gray-200'
+          }`}
         >
           <div
-            className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-200
-            ${
+            className={`flex h-12 w-12 items-center justify-center rounded-2xl transition-all duration-200 ${
               selectedRelation === '아들/딸'
-                ? 'bg-gradient-to-br from-sjz-red-bright to-sjz-red-main/30'
+                ? 'from-sjz-red-bright to-sjz-red-main/30 bg-gradient-to-br'
                 : 'bg-gradient-to-br from-red-50 to-red-50'
             }`}
           >
             <img
               src='/icons/relation-son.svg'
               alt='아들/딸'
-              className='w-8 h-8'
+              className='h-8 w-8'
             />
           </div>
           <div className='text-center'>
@@ -108,25 +106,23 @@ export default function RelationRegister({ onNextStep }) {
         </button>
         <button
           onClick={() => handleRelationSelect('손자/손녀')}
-          className={`aspect-square p-4 rounded-3xl border-2 flex flex-col items-center justify-center gap-3 transition-all duration-200
-            ${
-              selectedRelation === '손자/손녀'
-                ? 'bg-gradient-to-br from-sjz-red-bright/10 to-sjz-red-main/5 border-sjz-red-main shadow-lg'
-                : 'bg-white border-gray-100 hover:border-gray-200'
-            }`}
+          className={`flex aspect-square flex-col items-center justify-center gap-3 rounded-3xl border-2 p-4 transition-all duration-200 ${
+            selectedRelation === '손자/손녀'
+              ? 'from-sjz-red-bright/10 to-sjz-red-main/5 border-sjz-red-main bg-gradient-to-br shadow-lg'
+              : 'border-gray-100 bg-white hover:border-gray-200'
+          }`}
         >
           <div
-            className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-200
-            ${
+            className={`flex h-12 w-12 items-center justify-center rounded-2xl transition-all duration-200 ${
               selectedRelation === '손자/손녀'
-                ? 'bg-gradient-to-br from-sjz-red-bright to-sjz-red-main/30'
+                ? 'from-sjz-red-bright to-sjz-red-main/30 bg-gradient-to-br'
                 : 'bg-gradient-to-br from-red-50 to-red-50'
             }`}
           >
             <img
               src='/icons/relation-grandchildren.svg'
               alt='손자/손녀'
-              className='w-8 h-8'
+              className='h-8 w-8'
             />
           </div>
           <div className='text-center'>
@@ -139,25 +135,23 @@ export default function RelationRegister({ onNextStep }) {
         </button>
         <button
           onClick={() => handleRelationSelect('기타')}
-          className={`aspect-square p-4 rounded-3xl border-2 flex flex-col items-center justify-center gap-3 transition-all duration-200
-            ${
-              selectedRelation === '기타'
-                ? 'bg-gradient-to-br from-sjz-red-bright/10 to-sjz-red-main/5 border-sjz-red-main shadow-lg'
-                : 'bg-white border-gray-100 hover:border-gray-200'
-            }`}
+          className={`flex aspect-square flex-col items-center justify-center gap-3 rounded-3xl border-2 p-4 transition-all duration-200 ${
+            selectedRelation === '기타'
+              ? 'from-sjz-red-bright/10 to-sjz-red-main/5 border-sjz-red-main bg-gradient-to-br shadow-lg'
+              : 'border-gray-100 bg-white hover:border-gray-200'
+          }`}
         >
           <div
-            className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-200
-            ${
+            className={`flex h-12 w-12 items-center justify-center rounded-2xl transition-all duration-200 ${
               selectedRelation === '기타'
-                ? 'bg-gradient-to-br from-sjz-red-bright to-sjz-red-main/30'
+                ? 'from-sjz-red-bright to-sjz-red-main/30 bg-gradient-to-br'
                 : 'bg-gradient-to-br from-red-50 to-red-50'
             }`}
           >
             <img
               src='/icons/relation-other.svg'
               alt='기타'
-              className='w-8 h-8'
+              className='h-8 w-8'
             />
           </div>
           <div className='text-center'>
@@ -177,7 +171,7 @@ export default function RelationRegister({ onNextStep }) {
           onNextStep();
         }}
         disabled={!watch('name') || !watch('relation')}
-        className='bg-sjz-red-main h-12 w-80 text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed'
+        className='bg-sjz-red-main h-12 w-80 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50'
       >
         다음
       </Button>

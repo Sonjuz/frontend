@@ -12,12 +12,12 @@ export default function HomePage() {
   };
 
   return (
-    <div className='flex flex-col h-full items-center'>
+    <div className='flex h-full flex-col items-center'>
       <HomeHeader />
-      <div className='flex flex-col items-center justify-between h-full my-8'>
+      <div className='my-8 flex h-full flex-col items-center justify-between'>
         <Bookshelf books={TEMP_SCENARIOS} />
         <Button
-          className='w-80 h-16 bg-sjz-red-main text-white text-2xl font-bold rounded-xl'
+          className='bg-sjz-red-main h-16 w-80 rounded-xl text-2xl font-bold text-white'
           onClick={handleStart}
           icon='/icons/family-register.svg'
         >

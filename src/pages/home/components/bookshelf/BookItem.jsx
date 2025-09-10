@@ -14,11 +14,11 @@ export default function BookItem({ book }) {
   };
 
   return (
-    <div className='w-24 h-36 cursor-pointer'>
+    <div className='h-36 w-24 cursor-pointer'>
       <img
         src={book.icon}
         alt={book.title}
-        className='w-24 h-36'
+        className='h-36 w-24'
         onClick={() => handleClick(book)}
       />
     </div>
