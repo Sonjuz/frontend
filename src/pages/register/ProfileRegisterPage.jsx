@@ -30,7 +30,7 @@ const ProfileRegisterHeader = () => {
 };
 
 export default function RegisterPage() {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(2);
   const steps = [1, 2, 3];
 
   const handleNextStep = () => {
