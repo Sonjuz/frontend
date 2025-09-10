@@ -132,9 +132,10 @@ export default function ScenarioDetailPage() {
       <div className='flex justify-center my-4'>
         <Button
           className='w-[340px] h-[56px] bg-sjz-red-main text-white text-xl font-bold rounded-xl'
-          buttonText='책방으로 돌아가기'
           onClick={navigateToHome}
-        />
+        >
+          책방으로 돌아가기
+        </Button>
       </div>
     </div>
   );
