@@ -51,7 +51,7 @@ const ScenarioTrySection = () => {
         </div>
         <Button
           icon='/icons/simulate.svg'
-          onClick={() => navigate('/scenario/smishing')}
+          onClick={() => navigate('/scenario')}
           className={
             'bg-gradient-to-r from-[#F87171] to-[#EF4444] focus:ring-2 focus:ring-[#EF4444] focus:ring-offset-2 focus:outline-none'
           }
