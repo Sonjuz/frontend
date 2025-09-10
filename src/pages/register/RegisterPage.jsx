@@ -60,7 +60,7 @@ export default function RegisterPage() {
         <div className='flex flex-col gap-y-2 py-2 w-full items-center'>
           <Button
             onClick={handleRegister}
-            className='bg-sjz-red-main'
+            className='bg-sjz-red-main text-white font-semibold'
             icon='/icons/register.svg'
           >
             가족 프로필 등록하기

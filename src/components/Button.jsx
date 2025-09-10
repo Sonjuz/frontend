@@ -17,7 +17,7 @@ export const Button = ({ icon, onClick, disabled, className, children }) => {
       <div className='flex items-center pr-2'>
         {icon && <img src={icon} alt={icon} className='w-6 h-6' />}
       </div>
-      <span className='text-white text-center'>{children}</span>
+      {children}
     </button>
   );
 };
