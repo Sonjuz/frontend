@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import MessageScreen from '../components/MessageScreen';
 import ChoiceScreen from '../components/ChoiceScreen';
 import EndScreen from '../components/EndScreen';
+import Loading from '../../../components/Loading';
 
 const SimulationHeader = () => {
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ const NoticeCard = () => {
 };
 
 export default function SimulationPage() {
+  const [isLoading, setIsLoading] = useState(true);
   const [currentStep, setCurrentStep] = useState(0);
   const [stepsLength, setStepsLength] = useState(0);
   const [score, setScore] = useState(0);
@@ -85,6 +87,16 @@ export default function SimulationPage() {
       setTotalChoice(prev => prev + 1);
     }
   }, [currentStep]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className='flex h-full flex-col items-center p-4'>

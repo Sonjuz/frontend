@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import { SMISHING_SCENARIO } from '../../constants/scenario';
+import Loading from '../../components/Loading';
 
 const ScenarioDetailHeader = () => {
   const navigate = useNavigate();
@@ -108,10 +109,21 @@ const ListeningScenarioSection = () => {
 };
 
 export default function ScenarioDetailPage() {
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const navigateToHome = () => {
     navigate('/');
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className='flex h-full flex-col pb-4'>

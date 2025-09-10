@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/Button';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Loading from '../../components/Loading';
 
 const NEWS_SUMMARY = [
   {
@@ -32,6 +33,7 @@ const StoryCard = ({ title, image, description }) => (
 );
 
 export default function NewsSummaryPage() {
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(0);
   const [isFlipping, setIsFlipping] = useState(false);
@@ -54,6 +56,16 @@ export default function NewsSummaryPage() {
 
   const isLastPage = currentPage === NEWS_SUMMARY.length;
   const currentNews = NEWS_SUMMARY[currentPage];
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className='flex min-h-screen flex-col items-center bg-gray-50 p-6'>

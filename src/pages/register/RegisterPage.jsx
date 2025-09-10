@@ -2,13 +2,26 @@ import { useNavigate } from 'react-router-dom';
 import StepSection from './components/StepSection';
 import { Button } from '../../components/Button';
 import FeatureSection from './components/FeatureSection';
+import { useState, useEffect } from 'react';
+import Loading from '../../components/Loading';
 
 const RegisterHeader = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   const handleBack = () => {
     navigate('/');
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className='flex items-center p-4'>
