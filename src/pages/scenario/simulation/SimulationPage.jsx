@@ -1,3 +1,32 @@
+import { ProgressBar } from '../components/Progressbar';
+import { SMISHING_SCENARIO } from '../../../constants/scenario';
+import { useState, useEffect } from 'react';
+import { CallScreen } from '../components/CallScreen';
+import { useNavigate } from 'react-router-dom';
+
+const SimulationHeader = () => {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate('/');
+  };
+
+  return (
+    <div className='flex w-full items-center p-4'>
+      <button onClick={handleBack} className='mr-2'>
+        <img
+          src='/icons/back-btn.svg'
+          alt='back'
+          className='h-10 w-10 cursor-pointer'
+        />
+      </button>
+      <div className='flex w-full'>
+        <div className='text-lg font-bold'>시뮬레이션</div>
+      </div>
+    </div>
+  );
+};
+
 const NoticeCard = () => {
   return (
     <div className='flex w-80 items-center gap-7 rounded-2xl bg-green-50 p-3'>
@@ -16,9 +45,28 @@ const NoticeCard = () => {
 };
 
 export default function SimulationPage() {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [stepsLength, setStepsLength] = useState(0);
+  const [simuationStepsData, setSimuationStepsData] = useState(null);
+
+  useEffect(() => {
+    setStepsLength(SMISHING_SCENARIO.steps.length);
+    setSimuationStepsData(SMISHING_SCENARIO.steps);
+  }, []);
+
+  const handleNext = () => {
+    setCurrentStep(prev => prev + 1);
+  };
+
   return (
     <div className='flex h-full flex-col items-center p-4'>
+      <SimulationHeader />
+      <ProgressBar steps={stepsLength} currentStep={currentStep} />
       <NoticeCard />
+      {simuationStepsData &&
+        simuationStepsData[currentStep].screen_type === 'call' && (
+          <CallScreen simuationData={simuationStepsData} onNext={handleNext} />
+        )}
     </div>
   );
 }
