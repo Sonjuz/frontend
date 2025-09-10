@@ -73,6 +73,8 @@ const ScenarioTrySection = () => {
 };
 
 const ListeningScenarioSection = () => {
+  const navigate = useNavigate();
+
   return (
     <div className='flex items-center gap-2'>
       <div className='flex flex-col gap-4 rounded-xl border border-gray-300 bg-white p-4 shadow-2xl'>
@@ -93,7 +95,7 @@ const ListeningScenarioSection = () => {
         </div>
         <Button
           icon='/icons/listening.svg'
-          onClick={() => {}}
+          onClick={() => navigate('/news')}
           className={
             'bg-gradient-to-r from-[#60A5FA] to-[#3B82F6] text-white focus:ring-2 focus:ring-[#3B82F6] focus:ring-offset-2 focus:outline-none'
           }
