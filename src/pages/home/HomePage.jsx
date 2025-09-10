@@ -3,13 +3,26 @@ import { Button } from '../../components/Button';
 import HomeHeader from './components/HomeHeader';
 import Bookshelf from './components/bookshelf/Bookshelf';
 import { TEMP_SCENARIOS } from '../../constants/tempData';
+import { useEffect, useState } from 'react';
+import Loading from '../../components/Loading';
 
 export default function HomePage() {
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   const handleStart = () => {
     navigate('/register');
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className='flex h-full flex-col items-center'>
