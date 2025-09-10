@@ -27,6 +27,8 @@ const ScenarioDetailHeader = () => {
 };
 
 const ScenarioTrySection = () => {
+  const navigate = useNavigate();
+
   return (
     <div className='flex items-center gap-2'>
       <div className='flex flex-col gap-4 rounded-xl border border-gray-300 bg-white p-4 shadow-2xl'>
@@ -49,7 +51,7 @@ const ScenarioTrySection = () => {
         </div>
         <Button
           icon='/icons/simulate.svg'
-          onClick={() => {}}
+          onClick={() => navigate('/scenario/smishing')}
           className={
             'bg-gradient-to-r from-[#F87171] to-[#EF4444] focus:ring-2 focus:ring-[#EF4444] focus:ring-offset-2 focus:outline-none'
           }
