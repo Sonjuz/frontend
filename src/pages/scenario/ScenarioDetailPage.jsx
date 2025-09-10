@@ -1,12 +1,22 @@
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/Button';
+import { SMISHING_SCENARIO } from '../../constants/scenario';
 
 const ScenarioDetailHeader = () => {
   const navigate = useNavigate();
 
   const handleBack = () => {
     navigate('/');
+  };
+
+  const tilte = fraud_type => {
+    switch (fraud_type) {
+      case 'smishing':
+        return '스미싱';
+      case 'voicephishing':
+        return '보이스피싱';
+    }
   };
 
   return (
@@ -19,8 +29,9 @@ const ScenarioDetailHeader = () => {
         />
       </button>
       <div className='flex flex-col'>
-        <div className='text-lg font-bold'>시나리오 제목</div>
-        <div className='text-sm text-gray-500'>시나리오 부제목 표시 예정</div>
+        <div className='text-lg font-bold'>
+          {tilte(SMISHING_SCENARIO.fraud_type)}
+        </div>
       </div>
     </div>
   );
@@ -37,15 +48,13 @@ const ScenarioTrySection = () => {
             <img src='/icons/simulate.svg' alt='재생' className='h-10 w-10' />
           </div>
           <div className='ml-4 flex flex-col'>
-            <div className='mb-2 text-lg font-bold text-black'>체험하기</div>
+            <div className='mb-2 text-lg font-bold text-black'>
+              시나리오 체험
+            </div>
             <div className='w-44 text-sm text-gray-600'>
-              실제 전화가 온 것처럼
+              실제 상황처럼 금융 사기 예방 연습을 시작합니다.
               <br />
-              연습해보세요.
-              <br />
-              어떻게 대답해야 하는지
-              <br />
-              단계별로 배울 수 있어요.
+              천천히 읽고 신중하게 선택해주세요!
             </div>
           </div>
         </div>
@@ -53,7 +62,7 @@ const ScenarioTrySection = () => {
           icon='/icons/simulate.svg'
           onClick={() => navigate('/simulation')}
           className={
-            'bg-gradient-to-r from-[#F87171] to-[#EF4444] focus:ring-2 focus:ring-[#EF4444] focus:ring-offset-2 focus:outline-none'
+            'bg-gradient-to-r from-[#F87171] to-[#EF4444] text-white focus:ring-2 focus:ring-[#EF4444] focus:ring-offset-2 focus:outline-none'
           }
         >
           체험 시작하기
@@ -73,14 +82,12 @@ const ListeningScenarioSection = () => {
           </div>
           <div className='ml-4 flex flex-col'>
             <div className='mb-2 text-lg font-bold text-black'>
-              예시 시나리오
+              관련된 뉴스 요약
             </div>
             <div className='w-44 text-sm text-gray-600'>
-              다양한 시나리오를 통해
+              시나리오와 관련된 뉴스를 요약해서 보여드립니다.
               <br />
-              실제 전화가 온 것처럼
-              <br />
-              연습해보세요.
+              뉴스를 통해 배운 내용을 확인해보세요.
             </div>
           </div>
         </div>
@@ -88,7 +95,7 @@ const ListeningScenarioSection = () => {
           icon='/icons/listening.svg'
           onClick={() => {}}
           className={
-            'bg-gradient-to-r from-[#60A5FA] to-[#3B82F6] focus:ring-2 focus:ring-[#3B82F6] focus:ring-offset-2 focus:outline-none'
+            'bg-gradient-to-r from-[#60A5FA] to-[#3B82F6] text-white focus:ring-2 focus:ring-[#3B82F6] focus:ring-offset-2 focus:outline-none'
           }
         >
           가족 목소리로 듣기
@@ -99,9 +106,6 @@ const ListeningScenarioSection = () => {
 };
 
 export default function ScenarioDetailPage() {
-  const location = useLocation();
-  const { title } = location.state;
-
   const navigate = useNavigate();
   const navigateToHome = () => {
     navigate('/');
@@ -114,16 +118,16 @@ export default function ScenarioDetailPage() {
         <div className='mb-4 flex h-28 w-20 items-center justify-center rounded-lg bg-gray-200'>
           <img
             src='/images/temp-book.png'
-            alt={title}
+            alt={SMISHING_SCENARIO.scenario_title}
             className='h-full w-full rounded-lg object-cover'
           />
         </div>
         <div className='mb-2 flex flex-col gap-y-1'>
-          <p className='text-center text-2xl font-bold'>{title}</p>
+          <p className='text-center text-2xl font-bold break-keep'>
+            {SMISHING_SCENARIO.scenario_title}
+          </p>
           <p className='text-center text-base text-gray-600'>
-            실제 발생할 수 있는 상황을 체험하며
-            <br />
-            올바른 대응 방법을 학습해보세요.
+            실제 발생할 수 있는 상황을 체험하며 올바른 대응 방법을 학습해보세요.
           </p>
         </div>
       </div>
