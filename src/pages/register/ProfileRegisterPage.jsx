@@ -30,7 +30,7 @@ const ProfileRegisterHeader = () => {
 };
 
 export default function RegisterPage() {
-  const [currentStep, setCurrentStep] = useState(2);
+  const [currentStep, setCurrentStep] = useState(3);
   const steps = [1, 2, 3];
 
   const handleNextStep = () => {
@@ -45,8 +45,12 @@ export default function RegisterPage() {
 
   return (
     <div className='mx-auto flex h-full max-w-md flex-col items-center justify-between p-4'>
-      <ProfileRegisterHeader />
-      <ProgressBar steps={steps} currentStep={currentStep} />
+      {currentStep !== 3 && (
+        <>
+          <ProfileRegisterHeader />
+          <ProgressBar steps={steps} currentStep={currentStep} />
+        </>
+      )}
       <div className='mt-6 flex h-full flex-col items-center justify-between'>
         {currentStep === 0 && (
           <PhotoRegister
