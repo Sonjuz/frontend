@@ -1,5 +1,8 @@
 import { RECORD_SCRIPT, PRIVACY_NOTICE } from '../../../../constants/script';
 import { Button } from '../../../../components/Button';
+import { ReactMediaRecorder } from 'react-media-recorder';
+import { useState } from 'react';
+import WavEncoder from 'wav-encoder';
 
 const RecordScriptSection = () => {
   return (
@@ -11,16 +14,127 @@ const RecordScriptSection = () => {
         <img src='/icons/time.svg' alt='' className='mr-1 h-4 w-4' />
         <span>최소 1분 녹음 진행</span>
       </div>
-      <div className='scrollbar-hide h-80 w-full overflow-y-auto rounded-xl bg-gray-50 p-4'>
+      <div className='scrollbar-hide mb-8 h-80 w-full overflow-y-auto rounded-xl bg-gray-50 p-4'>
         <p className='text-lg leading-relaxed whitespace-pre-line text-gray-800'>
           {RECORD_SCRIPT}
         </p>
       </div>
-      <button className='group mt-8 flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-green-50 transition-colors hover:bg-green-100'>
-        <img src='/icons/mic.svg' alt='' className='h-5 w-5 text-green-700' />
-        <span className='text-lg font-semibold text-green-700'>녹음 시작</span>
-      </button>
+      <RecordButton />
     </div>
+  );
+};
+
+const RecordButton = () => {
+  const [audioFile, setAudioFile] = useState(null);
+  const [error, setError] = useState('');
+
+  // WAV 형식으로 변환 및 크기 제한
+  const handleRecordingComplete = async (blobUrl, blob) => {
+    try {
+      // 오디오 데이터 추출
+      const audioContext = new (window.AudioContext || window.AudioContext)();
+      const arrayBuffer = await blob.arrayBuffer();
+      const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+
+      // 모노로 변환 (채널 수 줄이기)
+      const monoChannel = new Float32Array(audioBuffer.length);
+      const left = audioBuffer.getChannelData(0);
+      const right =
+        audioBuffer.numberOfChannels > 1 ? audioBuffer.getChannelData(1) : null;
+
+      for (let i = 0; i < audioBuffer.length; i++) {
+        monoChannel[i] = right ? (left[i] + right[i]) / 2 : left[i];
+      }
+
+      // WAV 인코딩 설정
+      const wavData = {
+        sampleRate: audioBuffer.sampleRate,
+        channelData: [monoChannel],
+      };
+
+      // WAV로 인코딩
+      const wavArrayBuffer = await WavEncoder.encode(wavData);
+      const wavBlob = new Blob([wavArrayBuffer], { type: 'audio/wav' });
+
+      // 파일 크기 체크 (3MB)
+      if (wavBlob.size > 3 * 1024 * 1024) {
+        setError('녹음 파일이 3MB를 초과합니다. 더 짧게 녹음해 주세요.');
+        setAudioFile(null);
+        return;
+      }
+
+      const wavFile = new File([wavBlob], 'recording.wav', {
+        type: 'audio/wav',
+      });
+      setAudioFile(wavFile);
+      setError('');
+
+      console.log('WAV File Info:', {
+        name: wavFile.name,
+        size: `${(wavFile.size / 1024 / 1024).toFixed(2)}MB`,
+        type: wavFile.type,
+        duration: `${audioBuffer.duration.toFixed(1)}초`,
+      });
+    } catch (err) {
+      setError('오디오 처리 중 오류가 발생했습니다.');
+      console.error('Audio processing error:', err);
+    }
+  };
+
+  return (
+    <ReactMediaRecorder
+      audio
+      onStop={(blobUrl, blob) => handleRecordingComplete(blobUrl, blob)}
+      mediaRecorderOptions={{
+        mimeType: 'audio/webm',
+        audioBitsPerSecond: 128000, // 128kbps로 제한
+      }}
+      render={({ status, startRecording, stopRecording, mediaBlobUrl }) => (
+        <div className='space-y-4'>
+          {status === 'recording' ? (
+            <button
+              onClick={stopRecording}
+              className='group flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-red-50 transition-colors hover:bg-red-100'
+            >
+              <div className='h-2 w-2 animate-pulse rounded-full bg-red-500' />
+              <span className='text-lg font-semibold text-red-700'>
+                녹음 중지
+              </span>
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                setError('');
+                startRecording();
+              }}
+              className='group flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-green-50 transition-colors hover:bg-green-100'
+            >
+              <img
+                src='/icons/mic.svg'
+                alt='녹음'
+                className='h-5 w-5 text-green-700'
+              />
+              <span className='text-lg font-semibold text-green-700'>
+                {audioFile ? '다시 녹음하기' : '녹음 시작'}
+              </span>
+            </button>
+          )}
+
+          {error && <p className='text-center text-sm text-red-600'>{error}</p>}
+
+          {mediaBlobUrl && !error && (
+            <div className='rounded-xl bg-gray-50 p-3'>
+              <audio
+                src={mediaBlobUrl}
+                controls
+                className='h-10 w-full'
+                controlsList='nodownload noplaybackrate'
+              />
+            </div>
+          )}
+        </div>
+      )}
+    />
   );
 };
 
