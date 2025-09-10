@@ -19,15 +19,25 @@ const Notice = () => {
 };
 
 export default function PhotoRegister({ onNextStep }) {
-  const { register, handleSubmit, setValue, watch } = useForm();
+  const { register, setValue, watch } = useForm();
   const [preview, setPreview] = useState(null);
 
-  const onSubmit = data => {
-    if (!data.photo) {
+  const handleSubmit = () => {
+    if (!watch('photo')?.name) {
       alert('사진을 등록해주세요');
       return;
     }
-    console.log('Form Data:', data);
+
+    const file = watch('photo');
+    const fileUrl = URL.createObjectURL(file);
+
+    console.log('Selected File Info:', {
+      name: file.name,
+      type: file.type,
+      size: `${(file.size / 1024 / 1024).toFixed(2)}MB`,
+      url: fileUrl,
+    });
+
     onNextStep();
   };
 
@@ -35,7 +45,7 @@ export default function PhotoRegister({ onNextStep }) {
     const file = e.target.files?.[0];
     if (file) {
       if (file.size > 10 * 1024 * 1024) {
-        alert('파일 크기는 5MB 이하여야 합니다.');
+        alert('파일 크기는 10MB 이하여야 합니다.');
         return;
       }
 
@@ -48,6 +58,15 @@ export default function PhotoRegister({ onNextStep }) {
       setPreview(imageUrl);
       setValue('photo', file);
     }
+  };
+
+  const handleNextStep = () => {
+    if (!watch('photo')?.name) {
+      alert('사진을 등록해주세요');
+      return;
+    }
+
+    onNextStep();
   };
 
   return (
@@ -64,8 +83,8 @@ export default function PhotoRegister({ onNextStep }) {
           </p>
         </div>
         <form
-          onSubmit={handleSubmit(onSubmit)}
           className='w-full flex flex-col items-center'
+          onSubmit={handleNextStep}
         >
           <label className='relative w-32 h-32 rounded-full flex items-center justify-center overflow-hidden mb-4 cursor-pointer group transition-all duration-200'>
             <input
@@ -112,8 +131,10 @@ export default function PhotoRegister({ onNextStep }) {
         <Notice />
       </div>
       <Button
-        onClick={handleSubmit(onSubmit)}
-        className='bg-sjz-red-main w-full h-15 font-bold text-xl'
+        disabled={!watch('photo')?.name}
+        type='submit'
+        onClick={handleSubmit}
+        className='bg-sjz-red-main w-full h-15 font-bold text-xl disabled:opacity-50 disabled:cursor-not-allowed'
       >
         다음
       </Button>
