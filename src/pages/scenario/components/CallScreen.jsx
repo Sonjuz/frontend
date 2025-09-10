@@ -17,7 +17,7 @@ const TEMP_DATA = {
   ],
 };
 
-export const CallScreen = ({ onNext }) => {
+export default function CallScreen({ onNext }) {
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [showNextButton, setShowNextButton] = useState(false);
 
@@ -33,7 +33,7 @@ export const CallScreen = ({ onNext }) => {
           return prev;
         }
       });
-    }, 4000);
+    }, 1000);
 
     return () => clearInterval(timer);
   }, []);
@@ -69,4 +69,4 @@ export const CallScreen = ({ onNext }) => {
       )}
     </div>
   );
-};
+}

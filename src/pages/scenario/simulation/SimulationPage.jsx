@@ -1,8 +1,9 @@
 import { ProgressBar } from '../components/Progressbar';
 import { SMISHING_SCENARIO } from '../../../constants/scenario';
 import { useState, useEffect } from 'react';
-import { CallScreen } from '../components/CallScreen';
+import CallScreen from '../components/CallScreen';
 import { useNavigate } from 'react-router-dom';
+import MessageScreen from '../components/MessageScreen';
 
 const SimulationHeader = () => {
   const navigate = useNavigate();
@@ -66,6 +67,10 @@ export default function SimulationPage() {
       {simuationStepsData &&
         simuationStepsData[currentStep].screen_type === 'call' && (
           <CallScreen simuationData={simuationStepsData} onNext={handleNext} />
+        )}
+      {simuationStepsData &&
+        simuationStepsData[currentStep].screen_type === 'message' && (
+          <MessageScreen simuationData={simuationStepsData} />
         )}
     </div>
   );
