@@ -8,14 +8,11 @@ const RegisterPage = lazy(() => import('./pages/register/RegisterPage.jsx'));
 const ProfileRegisterPage = lazy(
   () => import('./pages/register/ProfileRegisterPage.jsx')
 );
-const VoicePhishingPage = lazy(
-  () => import('./pages/scenario/VoicePhishingPage.jsx')
-);
-const SmishingPage = lazy(() => import('./pages/scenario/SmishingPage.jsx'));
 const NewsSummaryPage = lazy(() => import('./pages/News/NewsSummaryPage.jsx'));
 const ScenarioDetailPage = lazy(
   () => import('./pages/scenario/ScenarioDetailPage.jsx')
 );
+const ScenarioPage = lazy(() => import('./pages/scenario/ScenarioPage.jsx'));
 
 export const router = createBrowserRouter([
   {
@@ -32,12 +29,8 @@ export const router = createBrowserRouter([
         element: <ProfileRegisterPage />,
       },
       {
-        path: 'scenario/voice',
-        element: <VoicePhishingPage />,
-      },
-      {
-        path: 'scenario/smishing',
-        element: <SmishingPage />,
+        path: 'scenario/',
+        element: <ScenarioPage />,
       },
       {
         path: 'scenario/detail',
