@@ -46,8 +46,10 @@ const RegisterContent = () => {
 };
 
 export default function RegisterPage() {
+  const navigate = useNavigate();
+
   const handleRegister = () => {
-    console.log('가족 프로필 등록으로 이동');
+    navigate('/register/profile');
   };
 
   return (
