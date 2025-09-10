@@ -32,7 +32,7 @@ const NoticeCard = () => {
   );
 };
 
-export default function RelationRegister() {
+export default function RelationRegister({ onNextStep }) {
   const { register, setValue, watch } = useForm({
     defaultValues: {
       name: '',
@@ -174,6 +174,7 @@ export default function RelationRegister() {
         onClick={() => {
           console.log(watch('name'));
           console.log(watch('relation'));
+          onNextStep();
         }}
         disabled={!watch('name') || !watch('relation')}
         className='bg-sjz-red-main h-12 w-80 text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed'
