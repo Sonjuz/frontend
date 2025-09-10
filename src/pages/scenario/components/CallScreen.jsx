@@ -39,10 +39,10 @@ export const CallScreen = ({ onNext }) => {
   }, []);
 
   return (
-    <div className='flex w-80 flex-col items-center gap-9'>
-      <div className='w-full space-y-3 text-center'>
-        <div className='text-2xl text-black'>수신 전화</div>
-        <div className='text-2xl text-black'>+82-2-XXXX-XXXX</div>
+    <div className='flex w-80 flex-col items-center gap-4'>
+      <div className='my-1 w-full gap-y-2 text-center'>
+        <div className='text-2xl font-bold text-black'>수신 전화</div>
+        <div className='text-2xl text-black'>010-XXXX-XXXX</div>
       </div>
       <img
         className='size-32 rounded-full border-4 border-red-500'
