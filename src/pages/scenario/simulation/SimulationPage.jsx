@@ -1,5 +1,5 @@
 import { ProgressBar } from '../components/Progressbar';
-import { SMISHING_SCENARIO } from '../../../constants/scenario';
+import { VOICE_PHISHING_SCENARIO } from '../../../constants/scenario';
 import { useState, useEffect } from 'react';
 import CallScreen from '../components/CallScreen';
 import { useNavigate } from 'react-router-dom';
@@ -56,9 +56,9 @@ export default function SimulationPage() {
   const [totalChoice, setTotalChoice] = useState(0);
 
   useEffect(() => {
-    setStepsLength(SMISHING_SCENARIO.steps.length);
-    setSimuationStepsData(SMISHING_SCENARIO.steps);
-    setSender(SMISHING_SCENARIO.target_impersonation);
+    setStepsLength(VOICE_PHISHING_SCENARIO.steps.length);
+    setSimuationStepsData(VOICE_PHISHING_SCENARIO.steps);
+    setSender(VOICE_PHISHING_SCENARIO.target_impersonation);
   }, []);
 
   const handleNext = () => {
@@ -66,7 +66,7 @@ export default function SimulationPage() {
   };
 
   const handleSelect = choice => {
-    setCurrentStep(choice.next_step + 1);
+    handleNext();
     if (choice.is_correct) {
       setScore(prev => prev + 1);
     }
