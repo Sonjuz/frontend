@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '../../components/Button';
-import { SMISHING_SCENARIO } from '../../constants/scenario';
+import { Button } from '../../../../components/Button';
+import { SMISHING_SCENARIO } from '../../../../constants/scenario';
 
 const MessageHeader = ({ type }) => {
   return (

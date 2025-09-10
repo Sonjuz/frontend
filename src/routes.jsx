@@ -12,7 +12,9 @@ const NewsSummaryPage = lazy(() => import('./pages/News/NewsSummaryPage.jsx'));
 const ScenarioDetailPage = lazy(
   () => import('./pages/scenario/ScenarioDetailPage.jsx')
 );
-const ScenarioPage = lazy(() => import('./pages/scenario/ScenarioPage.jsx'));
+const SimulationPage = lazy(
+  () => import('./pages/scenario/simulation/SimulationPage.jsx')
+);
 
 export const router = createBrowserRouter([
   {
@@ -29,8 +31,8 @@ export const router = createBrowserRouter([
         element: <ProfileRegisterPage />,
       },
       {
-        path: 'scenario/',
-        element: <ScenarioPage />,
+        path: 'simulation',
+        element: <SimulationPage />,
       },
       {
         path: 'scenario/detail',
