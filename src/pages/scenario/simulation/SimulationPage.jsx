@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import CallScreen from '../components/CallScreen';
 import { useNavigate } from 'react-router-dom';
 import MessageScreen from '../components/MessageScreen';
+import ChoiceScreen from '../components/ChoiceScreen';
 
 const SimulationHeader = () => {
   const navigate = useNavigate();
@@ -67,6 +68,10 @@ export default function SimulationPage() {
     setCurrentStep(prev => prev + 1);
   };
 
+  const handleSelect = choice => {
+    setCurrentStep(choice.next_step + 1);
+  };
+
   return (
     <div className='flex h-full flex-col items-center p-4'>
       <SimulationHeader />
@@ -85,6 +90,13 @@ export default function SimulationPage() {
             sender={sender}
             simuationData={simuationStepsData[currentStep].messages}
             onNext={handleNext}
+          />
+        )}
+      {simuationStepsData &&
+        simuationStepsData[currentStep].screen_type === 'choice' && (
+          <ChoiceScreen
+            choices={simuationStepsData[currentStep].choices}
+            onSelect={handleSelect}
           />
         )}
     </div>
