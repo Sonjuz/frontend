@@ -16,7 +16,7 @@ export default function MessageScreen({ simuationData, sender, onNext }) {
           return prev;
         }
       });
-    }, 1000);
+    }, 100);
 
     return () => clearInterval(timer);
   }, []);

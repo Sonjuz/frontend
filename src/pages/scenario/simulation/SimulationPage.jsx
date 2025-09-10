@@ -5,6 +5,7 @@ import CallScreen from '../components/CallScreen';
 import { useNavigate } from 'react-router-dom';
 import MessageScreen from '../components/MessageScreen';
 import ChoiceScreen from '../components/ChoiceScreen';
+import EndScreen from '../components/EndScreen';
 
 const SimulationHeader = () => {
   const navigate = useNavigate();
@@ -49,8 +50,10 @@ const NoticeCard = () => {
 export default function SimulationPage() {
   const [currentStep, setCurrentStep] = useState(0);
   const [stepsLength, setStepsLength] = useState(0);
+  const [score, setScore] = useState(0);
   const [simuationStepsData, setSimuationStepsData] = useState(null);
   const [sender, setSender] = useState(null);
+  const [totalChoice, setTotalChoice] = useState(0);
 
   useEffect(() => {
     setStepsLength(SMISHING_SCENARIO.steps.length);
@@ -58,47 +61,84 @@ export default function SimulationPage() {
     setSender(SMISHING_SCENARIO.target_impersonation);
   }, []);
 
-  useEffect(() => {
-    if (simuationStepsData) {
-      console.log(sender);
-    }
-  }, [simuationStepsData]);
-
   const handleNext = () => {
     setCurrentStep(prev => prev + 1);
   };
 
   const handleSelect = choice => {
     setCurrentStep(choice.next_step + 1);
+    if (choice.is_correct) {
+      setScore(prev => prev + 1);
+    }
   };
+
+  const calculateScore = () => {
+    return (score / totalChoice) * 100;
+  };
+
+  useEffect(() => {
+    if (
+      simuationStepsData &&
+      currentStep < stepsLength &&
+      simuationStepsData[currentStep].screen_type === 'choice'
+    ) {
+      setTotalChoice(prev => prev + 1);
+    }
+  }, [currentStep]);
 
   return (
     <div className='flex h-full flex-col items-center p-4'>
-      <SimulationHeader />
-      <ProgressBar steps={stepsLength} currentStep={currentStep} />
-      <NoticeCard />
       {simuationStepsData &&
-        simuationStepsData[currentStep].screen_type === 'call' && (
-          <CallScreen
-            simuationData={simuationStepsData[currentStep].messages}
-            onNext={handleNext}
-          />
-        )}
-      {simuationStepsData &&
-        simuationStepsData[currentStep].screen_type === 'message' && (
-          <MessageScreen
-            sender={sender}
-            simuationData={simuationStepsData[currentStep].messages}
-            onNext={handleNext}
-          />
-        )}
-      {simuationStepsData &&
-        simuationStepsData[currentStep].screen_type === 'choice' && (
-          <ChoiceScreen
-            choices={simuationStepsData[currentStep].choices}
-            onSelect={handleSelect}
-          />
-        )}
+        (() => {
+          const isSimulationEnd = stepsLength === currentStep;
+          const currentStepData = simuationStepsData[currentStep];
+
+          if (isSimulationEnd) {
+            return (
+              <EndScreen
+                correctCount={score}
+                totalCount={totalChoice}
+                percentage={calculateScore()}
+              />
+            );
+          }
+
+          return (
+            <>
+              <SimulationHeader />
+              <ProgressBar steps={stepsLength} currentStep={currentStep} />
+              <NoticeCard />
+              {(() => {
+                switch (currentStepData.screen_type) {
+                  case 'call':
+                    return (
+                      <CallScreen
+                        simuationData={currentStepData.messages}
+                        onNext={handleNext}
+                      />
+                    );
+                  case 'message':
+                    return (
+                      <MessageScreen
+                        sender={sender}
+                        simuationData={currentStepData.messages}
+                        onNext={handleNext}
+                      />
+                    );
+                  case 'choice':
+                    return (
+                      <ChoiceScreen
+                        choices={currentStepData.choices}
+                        onSelect={handleSelect}
+                      />
+                    );
+                  default:
+                    return null;
+                }
+              })()}
+            </>
+          );
+        })()}
     </div>
   );
 }
