@@ -49,15 +49,17 @@ export default function SimulationPage() {
   const [currentStep, setCurrentStep] = useState(0);
   const [stepsLength, setStepsLength] = useState(0);
   const [simuationStepsData, setSimuationStepsData] = useState(null);
+  const [sender, setSender] = useState(null);
 
   useEffect(() => {
     setStepsLength(SMISHING_SCENARIO.steps.length);
     setSimuationStepsData(SMISHING_SCENARIO.steps);
+    setSender(SMISHING_SCENARIO.target_impersonation);
   }, []);
 
   useEffect(() => {
     if (simuationStepsData) {
-      console.log(simuationStepsData[currentStep].messages);
+      console.log(sender);
     }
   }, [simuationStepsData]);
 
@@ -79,7 +81,11 @@ export default function SimulationPage() {
         )}
       {simuationStepsData &&
         simuationStepsData[currentStep].screen_type === 'message' && (
-          <MessageScreen />
+          <MessageScreen
+            sender={sender}
+            simuationData={simuationStepsData[currentStep].messages}
+            onNext={handleNext}
+          />
         )}
     </div>
   );
