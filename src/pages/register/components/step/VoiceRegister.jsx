@@ -3,8 +3,9 @@ import { Button } from '../../../../components/Button';
 import { ReactMediaRecorder } from 'react-media-recorder';
 import { useState } from 'react';
 import WavEncoder from 'wav-encoder';
+import { useForm } from 'react-hook-form';
 
-const RecordScriptSection = () => {
+const RecordScriptSection = ({ setAudioFile }) => {
   return (
     <div className='h-130 w-80 rounded-2xl border border-gray-100 bg-white p-6 shadow-xl'>
       <div className='text-center text-lg font-bold text-gray-800'>
@@ -19,13 +20,12 @@ const RecordScriptSection = () => {
           {RECORD_SCRIPT}
         </p>
       </div>
-      <RecordButton />
+      <RecordButton setAudioFile={setAudioFile} />
     </div>
   );
 };
 
-const RecordButton = () => {
-  const [audioFile, setAudioFile] = useState(null);
+const RecordButton = ({ audioFile, setAudioFile }) => {
   const [error, setError] = useState('');
 
   // WAV 형식으로 변환 및 크기 제한
@@ -158,7 +158,15 @@ const NoticeCard = () => {
   );
 };
 
-export default function VoiceRegister() {
+export default function VoiceRegister({ onNextStep }) {
+  const [audioFile, setAudioFile] = useState(null);
+  const { setValue } = useForm();
+
+  const handleNextStep = () => {
+    setValue('audio', audioFile);
+    onNextStep();
+  };
+
   return (
     <div className='flex flex-col justify-between gap-y-4 pb-4'>
       <div className='text-center'>
@@ -171,9 +179,13 @@ export default function VoiceRegister() {
           안내를 들을 수 있어요
         </p>
       </div>
-      <RecordScriptSection />
+      <RecordScriptSection setAudioFile={setAudioFile} />
       <NoticeCard />
-      <Button className={'bg-sjz-red-main h-14 w-80 font-semibold text-white'}>
+      <Button
+        className={'bg-sjz-red-main h-14 w-80 font-semibold text-white'}
+        disabled={!audioFile}
+        onClick={handleNextStep}
+      >
         다음
       </Button>
     </div>
