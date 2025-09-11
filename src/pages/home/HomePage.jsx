@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import HomeHeader from './components/HomeHeader';
 import Bookshelf from './components/bookshelf/Bookshelf';
@@ -9,12 +9,18 @@ import Modal from '../../components/Modal';
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
-
   const [isError, setIsError] = useState(false);
   const [popular, setPopular] = useState([]);
   const [latest, setLatest] = useState([]);
   const [recommended, setRecommended] = useState([]);
   const navigate = useNavigate();
+  const { profile_url } = useParams();
+
+  useEffect(() => {
+    if (profile_url) {
+      localStorage.setItem('profile_url', profile_url);
+    }
+  }, [profile_url]);
 
   const handleStart = () => {
     navigate('/register');

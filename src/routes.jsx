@@ -23,6 +23,10 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       {
+        path: ':profile_url',
+        element: <HomePage />,
+      },
+      {
         path: 'register',
         element: <RegisterPage />,
       },

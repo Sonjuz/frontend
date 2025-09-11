@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 const ResultSection = ({ handleCopyUrl }) => {
-  const baseUrl = 'https://localhost:5173';
+  const baseUrl = 'http://localhost:5173/';
   const [profile_url, setProfile_url] = useState(null);
 
   const getProfileUrl = () => {
