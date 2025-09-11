@@ -1,6 +1,5 @@
 import { Button } from '../../../../components/Button';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 
 const Notice = () => {
   return (
@@ -18,26 +17,20 @@ const Notice = () => {
   );
 };
 
-export default function PhotoRegister({ onNextStep }) {
-  const { register, setValue, watch } = useForm();
-  const [preview, setPreview] = useState(null);
+export default function PhotoRegister({
+  profileImage,
+  onPhotoChange,
+  onNextStep,
+}) {
+  const [preview, setPreview] = useState(
+    profileImage ? URL.createObjectURL(profileImage) : null
+  );
 
   const handleSubmit = () => {
-    if (!watch('photo')?.name) {
+    if (!profileImage) {
       alert('사진을 등록해주세요');
       return;
     }
-
-    const file = watch('photo');
-    const fileUrl = URL.createObjectURL(file);
-
-    console.log('Selected File Info:', {
-      name: file.name,
-      type: file.type,
-      size: `${(file.size / 1024 / 1024).toFixed(2)}MB`,
-      url: fileUrl,
-    });
-
     onNextStep();
   };
 
@@ -56,17 +49,8 @@ export default function PhotoRegister({ onNextStep }) {
 
       const imageUrl = URL.createObjectURL(file);
       setPreview(imageUrl);
-      setValue('photo', file);
+      onPhotoChange(file);
     }
-  };
-
-  const handleNextStep = () => {
-    if (!watch('photo')?.name) {
-      alert('사진을 등록해주세요');
-      return;
-    }
-
-    onNextStep();
   };
 
   return (
@@ -84,14 +68,13 @@ export default function PhotoRegister({ onNextStep }) {
         </div>
         <form
           className='flex w-full flex-col items-center'
-          onSubmit={handleNextStep}
+          onSubmit={handleSubmit}
         >
           <label className='group relative mb-4 flex h-32 w-32 cursor-pointer items-center justify-center overflow-hidden rounded-full transition-all duration-200'>
             <input
               type='file'
               accept='image/*'
               className='hidden'
-              {...register('photo', { required: true })}
               onChange={handleImageChange}
             />
             <div className='absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 transition-opacity group-hover:bg-black/30 group-hover:opacity-100'>
@@ -121,9 +104,9 @@ export default function PhotoRegister({ onNextStep }) {
             </div>
           </label>
           <div className='mb-4 flex w-full items-center justify-center text-sm text-gray-500'>
-            {watch('photo')?.name && (
+            {profileImage?.name && (
               <span className='max-w-[200px] truncate'>
-                {watch('photo').name}
+                {profileImage.name}
               </span>
             )}
           </div>
@@ -131,10 +114,10 @@ export default function PhotoRegister({ onNextStep }) {
         <Notice />
       </div>
       <Button
-        disabled={!watch('photo')?.name}
+        disabled={!profileImage}
         type='submit'
         onClick={handleSubmit}
-        className='bg-sjz-red-main h-15 w-full text-xl font-bold disabled:cursor-not-allowed disabled:opacity-50'
+        className='bg-sjz-red-main h-15 w-full text-xl font-bold text-white disabled:cursor-not-allowed disabled:opacity-50'
       >
         다음
       </Button>

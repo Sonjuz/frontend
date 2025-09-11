@@ -3,9 +3,8 @@ import { Button } from '../../../../components/Button';
 import { ReactMediaRecorder } from 'react-media-recorder';
 import { useState } from 'react';
 import WavEncoder from 'wav-encoder';
-import { useForm } from 'react-hook-form';
 
-const RecordScriptSection = ({ setAudioFile }) => {
+const RecordScriptSection = ({ onAudioFileChange }) => {
   return (
     <div className='h-130 w-80 rounded-2xl border border-gray-100 bg-white p-6 shadow-xl'>
       <div className='text-center text-lg font-bold text-gray-800'>
@@ -20,12 +19,12 @@ const RecordScriptSection = ({ setAudioFile }) => {
           {RECORD_SCRIPT}
         </p>
       </div>
-      <RecordButton setAudioFile={setAudioFile} />
+      <RecordButton onAudioFileChange={onAudioFileChange} />
     </div>
   );
 };
 
-const RecordButton = ({ audioFile, setAudioFile }) => {
+const RecordButton = ({ audioFile, onAudioFileChange }) => {
   const [error, setError] = useState('');
 
   // WAV 형식으로 변환 및 크기 제한
@@ -59,22 +58,15 @@ const RecordButton = ({ audioFile, setAudioFile }) => {
       // 파일 크기 체크 (3MB)
       if (wavBlob.size > 3 * 1024 * 1024) {
         setError('녹음 파일이 3MB를 초과합니다. 더 짧게 녹음해 주세요.');
-        setAudioFile(null);
+        onAudioFileChange(null);
         return;
       }
 
       const wavFile = new File([wavBlob], 'recording.wav', {
         type: 'audio/wav',
       });
-      setAudioFile(wavFile);
+      onAudioFileChange(wavFile);
       setError('');
-
-      console.log('WAV File Info:', {
-        name: wavFile.name,
-        size: `${(wavFile.size / 1024 / 1024).toFixed(2)}MB`,
-        type: wavFile.type,
-        duration: `${audioBuffer.duration.toFixed(1)}초`,
-      });
     } catch (err) {
       setError('오디오 처리 중 오류가 발생했습니다.');
       console.error('Audio processing error:', err);
@@ -158,13 +150,17 @@ const NoticeCard = () => {
   );
 };
 
-export default function VoiceRegister({ onNextStep }) {
-  const [audioFile, setAudioFile] = useState(null);
-  const { setValue } = useForm();
+export default function VoiceRegister({
+  audioFile,
+  onVoiceChange,
+  onNextStep,
+}) {
+  const [audio, setAudio] = useState(audioFile);
 
-  const handleNextStep = () => {
-    setValue('audio', audioFile);
-    onNextStep();
+  // audioFile이 변경될 때만 상위 컴포넌트에 알림
+  const handleAudioFileChange = newAudioFile => {
+    setAudio(newAudioFile);
+    onVoiceChange(newAudioFile);
   };
 
   return (
@@ -179,12 +175,12 @@ export default function VoiceRegister({ onNextStep }) {
           안내를 들을 수 있어요
         </p>
       </div>
-      <RecordScriptSection setAudioFile={setAudioFile} />
+      <RecordScriptSection onAudioFileChange={handleAudioFileChange} />
       <NoticeCard />
       <Button
         className={'bg-sjz-red-main h-14 w-80 font-semibold text-white'}
-        disabled={!audioFile}
-        onClick={handleNextStep}
+        disabled={!audio}
+        onClick={onNextStep}
       >
         다음
       </Button>

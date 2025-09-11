@@ -1,5 +1,5 @@
 import { Button } from '../../../../components/Button';
-import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 
 const NoticeCard = () => {
   return (
@@ -32,18 +32,31 @@ const NoticeCard = () => {
   );
 };
 
-export default function RelationRegister({ onNextStep }) {
-  const { register, setValue, watch } = useForm({
-    defaultValues: {
-      name: '',
-      relation: '',
-    },
-  });
+export default function RelationRegister({
+  name,
+  familyRelation,
+  onNameChange,
+  onRelationChange,
+  onNextStep,
+}) {
+  const [selectedRelation, setSelectedRelation] = useState(familyRelation);
 
-  const selectedRelation = watch('relation');
-
-  const handleRelationSelect = relation => {
-    setValue('relation', relation);
+  const handleRelationSelect = newRelation => {
+    const convertRelation = relation => {
+      switch (relation) {
+        case '아들/딸':
+          return 'CHILDREN';
+        case '손자/손녀':
+          return 'GRANDCHILDREN';
+        case '기타':
+          return 'ETC';
+        default:
+          return 'GRANDCHILDREN';
+      }
+    };
+    setSelectedRelation(newRelation);
+    const relation = convertRelation(newRelation);
+    onRelationChange(relation);
   };
 
   return (
@@ -68,7 +81,8 @@ export default function RelationRegister({ onNextStep }) {
           type='text'
           placeholder='예: 영희, 철수, 민수 등'
           className='w-full text-lg text-gray-900 placeholder-gray-400 outline-none'
-          {...register('name', { required: true })}
+          value={name}
+          onChange={e => onNameChange(e.target.value)}
         />
       </div>
       <label className='my-4 block text-lg font-medium text-gray-700'>
@@ -165,12 +179,8 @@ export default function RelationRegister({ onNextStep }) {
       </div>
       <NoticeCard />
       <Button
-        onClick={() => {
-          console.log(watch('name'));
-          console.log(watch('relation'));
-          onNextStep();
-        }}
-        disabled={!watch('name') || !watch('relation')}
+        onClick={onNextStep}
+        disabled={!name || !selectedRelation}
         className='bg-sjz-red-main h-12 w-80 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50'
       >
         다음

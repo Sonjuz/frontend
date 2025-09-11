@@ -30,10 +30,25 @@ const ProfileRegisterHeader = () => {
 };
 
 export default function RegisterPage() {
-  const [currentStep, setCurrentStep] = useState(3);
+  const [currentStep, setCurrentStep] = useState(0);
   const steps = [1, 2, 3];
 
-  const handleNextStep = () => {
+  // 프로필 정보 상태 관리
+  const [profileData, setProfileData] = useState({
+    voiceFile: null,
+    profileImage: null,
+    name: '',
+    familyRelation: '',
+  });
+
+  const updateProfileData = (field, value) => {
+    setProfileData(prev => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const handleNextStep = async () => {
     if (currentStep >= 3) return;
     setCurrentStep(currentStep + 1);
   };
@@ -54,24 +69,42 @@ export default function RegisterPage() {
       <div className='mt-6 flex h-full flex-col items-center justify-between'>
         {currentStep === 0 && (
           <PhotoRegister
+            profileImage={profileData.profileImage}
+            onPhotoChange={profileImage =>
+              updateProfileData('profileImage', profileImage)
+            }
             onNextStep={handleNextStep}
             onPrevStep={handlePrevStep}
           />
         )}
         {currentStep === 1 && (
           <RelationRegister
+            name={profileData.name}
+            familyRelation={profileData.familyRelation}
+            onNameChange={name => updateProfileData('name', name)}
+            onRelationChange={familyRelation =>
+              updateProfileData('familyRelation', familyRelation)
+            }
             onNextStep={handleNextStep}
             onPrevStep={handlePrevStep}
           />
         )}
         {currentStep === 2 && (
           <VoiceRegister
+            voiceFile={profileData.voiceFile}
+            onVoiceChange={voiceFile =>
+              updateProfileData('voiceFile', voiceFile)
+            }
             onNextStep={handleNextStep}
             onPrevStep={handlePrevStep}
           />
         )}
         {currentStep === 3 && (
-          <Done onNextStep={handleNextStep} onPrevStep={handlePrevStep} />
+          <Done
+            profileData={profileData}
+            onNextStep={handleNextStep}
+            onPrevStep={handlePrevStep}
+          />
         )}
       </div>
     </div>
