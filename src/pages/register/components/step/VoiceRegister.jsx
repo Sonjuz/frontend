@@ -1,12 +1,12 @@
 import { RECORD_SCRIPT, PRIVACY_NOTICE } from '../../../../constants/script';
 import { Button } from '../../../../components/Button';
 import { ReactMediaRecorder } from 'react-media-recorder';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import WavEncoder from 'wav-encoder';
 
 const RecordScriptSection = ({ onAudioFileChange }) => {
   return (
-    <div className='h-130 w-80 rounded-2xl border border-gray-100 bg-white p-6 shadow-xl'>
+    <div className='h-150 w-80 rounded-2xl border border-gray-100 bg-white p-6 shadow-xl'>
       <div className='text-center text-lg font-bold text-gray-800'>
         다음 문장을 읽어주세요
       </div>
@@ -26,6 +26,8 @@ const RecordScriptSection = ({ onAudioFileChange }) => {
 
 const RecordButton = ({ audioFile, onAudioFileChange }) => {
   const [error, setError] = useState('');
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
 
   // WAV 형식으로 변환 및 크기 제한
   const handleRecordingComplete = async (blobUrl, blob) => {
@@ -111,19 +113,56 @@ const RecordButton = ({ audioFile, onAudioFileChange }) => {
               </span>
             </button>
           )}
-
           {error && <p className='text-center text-sm text-red-600'>{error}</p>}
-
           {mediaBlobUrl && !error && (
             <div className='rounded-xl bg-gray-50 p-3'>
-              <audio
-                src={mediaBlobUrl}
-                controls
-                className='h-10 w-full'
-                controlsList='nodownload noplaybackrate'
-              />
+              <div className='flex gap-3'>
+                <button
+                  onClick={() => {
+                    if (isPlaying) {
+                      audioRef.current?.pause();
+                      audioRef.current.currentTime = 0;
+                    } else {
+                      audioRef.current?.play();
+                    }
+                    setIsPlaying(!isPlaying);
+                  }}
+                  className={`flex h-11 w-32 items-center justify-center gap-2 rounded-xl text-white transition-colors ${
+                    isPlaying
+                      ? 'bg-gray-500 hover:bg-gray-600'
+                      : 'bg-blue-500 hover:bg-blue-600'
+                  }`}
+                >
+                  <img
+                    src={isPlaying ? '/icons/pause.svg' : '/icons/play.svg'}
+                    alt={isPlaying ? '정지' : '재생'}
+                    className={`h-5 w-5 ${isPlaying ? 'text-gray-500' : 'text-blue-500'}`}
+                  />
+                  <span className='text-sm font-medium'>
+                    {isPlaying ? '정지' : '재생'}
+                  </span>
+                </button>
+                <button
+                  onClick={startRecording}
+                  className='flex h-11 w-32 items-center justify-center gap-2 rounded-xl bg-gray-500 text-white transition-colors hover:bg-gray-600'
+                >
+                  <img
+                    src='/icons/record-again.svg'
+                    alt='녹음'
+                    className='h-5 w-5'
+                  />
+                  <span className='text-sm font-medium'>다시 녹음</span>
+                </button>
+              </div>
             </div>
           )}
+          <audio
+            ref={audioRef}
+            src={mediaBlobUrl}
+            onEnded={() => setIsPlaying(false)}
+            onPause={() => setIsPlaying(false)}
+            className='hidden'
+          />
         </div>
       )}
     />

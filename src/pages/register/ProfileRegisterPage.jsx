@@ -31,6 +31,7 @@ const ProfileRegisterHeader = () => {
 };
 
 export default function RegisterPage() {
+  const [isError, setIsError] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const steps = [1, 2, 3];
 
@@ -51,8 +52,12 @@ export default function RegisterPage() {
 
   const handleNextStep = async () => {
     if (currentStep === steps.length - 1) {
-      await handleRegister();
-      return;
+      try {
+        await handleRegister();
+      } catch {
+        setIsError(true);
+      }
+      setCurrentStep(steps.length);
     }
     setCurrentStep(currentStep + 1);
   };
@@ -65,11 +70,16 @@ export default function RegisterPage() {
   const handleRegister = async () => {
     try {
       const response = await registerProfile(profileData);
-      console.log(response);
+      localStorage.setItem('profile_url', response.id);
+      return response.id;
     } catch (error) {
       console.error(error);
     }
   };
+
+  if (isError) {
+    return <div>Error</div>;
+  }
 
   return (
     <div className='mx-auto flex h-full max-w-md flex-col items-center justify-between p-4'>
