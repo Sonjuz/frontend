@@ -15,7 +15,7 @@ const RecordScriptSection = ({ onAudioFileChange }) => {
         <span>최소 1분 녹음 진행</span>
       </div>
       <div className='scrollbar-hide mb-8 h-80 w-full overflow-y-auto rounded-xl bg-gray-50 p-4'>
-        <p className='text-lg leading-relaxed whitespace-pre-line text-gray-800'>
+        <p className='text-lg leading-relaxed break-keep whitespace-pre-line text-gray-800'>
           {RECORD_SCRIPT}
         </p>
       </div>
@@ -56,7 +56,6 @@ const RecordButton = ({ audioFile, onAudioFileChange }) => {
       // WAV로 인코딩
       const wavArrayBuffer = await WavEncoder.encode(wavData);
       const wavBlob = new Blob([wavArrayBuffer], { type: 'audio/wav' });
-
       // 파일 크기 체크 (3MB)
       if (wavBlob.size > 3 * 1024 * 1024) {
         setError('녹음 파일이 3MB를 초과합니다. 더 짧게 녹음해 주세요.');
