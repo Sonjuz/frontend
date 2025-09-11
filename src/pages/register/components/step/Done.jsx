@@ -13,9 +13,7 @@ const ResultSection = ({ handleCopyUrl }) => {
 
   useEffect(() => {
     const url = getProfileUrl();
-    console.log(url);
     setProfile_url(url);
-    console.log(profile_url);
   }, [profile_url]);
 
   return (
@@ -54,7 +52,6 @@ export default function Done() {
 
   const handleCopyUrl = url => {
     navigator.clipboard.writeText(url);
-    console.log('URL 복사됨', url);
   };
 
   const navigateToHome = () => {
