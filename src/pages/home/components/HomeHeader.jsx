@@ -1,7 +1,7 @@
 export default function HomeHeader() {
   return (
     <div className='flex flex-col items-center gap-2 pt-4'>
-      <p className='text-3xl font-bold'>실전처럼 연습해보세요</p>
+      <img src='/images/logo.png' alt='로고' className='w-fulll h-10' />
       <p className='text-center text-xl text-black'>
         사례를 선택해서
         <br />
