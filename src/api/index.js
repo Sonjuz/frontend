@@ -23,7 +23,7 @@ export const registerProfile = async profileData => {
 export const fetchAllSimulations = async () => {
   try {
     const response = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/v1/simulation`
+      `${import.meta.env.VITE_API_URL}/api/v1/book`
     );
     return response.data.data;
   } catch (error) {
@@ -34,7 +34,7 @@ export const fetchAllSimulations = async () => {
 export const fetchSimulationById = async id => {
   try {
     const response = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/v1/simulation/${id}`
+      `${import.meta.env.VITE_API_URL}/api/v1/book/${id}/simulation`
     );
     return response.data.data;
   } catch (error) {

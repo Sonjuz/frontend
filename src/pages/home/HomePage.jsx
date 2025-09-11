@@ -29,9 +29,10 @@ export default function HomePage() {
   const getAllSimulations = async () => {
     try {
       const simulations = await fetchAllSimulations();
-      setPopular(simulations.popular_simulations || []);
-      setLatest(simulations.latest_simulations || []);
-      setRecommended(simulations.recommended_simulations || []);
+      console.log(simulations);
+      setPopular(simulations.popular_books || []);
+      setLatest(simulations.latest_books || []);
+      setRecommended(simulations.recommended_books || []);
       setIsLoading(false);
     } catch (error) {
       console.error('Error fetching simulations:', error);
