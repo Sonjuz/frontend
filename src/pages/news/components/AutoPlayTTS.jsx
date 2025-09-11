@@ -1,7 +1,7 @@
 // AutoPlayTTS.jsx
 import { useEffect, useRef } from 'react';
 
-export default function AutoPlayTTS({ ttsUrl }) {
+export default function AutoPlayTTS({ ttsUrl, onEnded }) {
   const audioRef = useRef(null);
 
   useEffect(() => {
@@ -17,7 +17,13 @@ export default function AutoPlayTTS({ ttsUrl }) {
 
   return (
     <div className='w-full'>
-      <audio ref={audioRef} src={ttsUrl} autoPlay preload='auto' />
+      <audio
+        ref={audioRef}
+        src={ttsUrl}
+        autoPlay
+        preload='auto'
+        onEnded={onEnded}
+      />
     </div>
   );
 }

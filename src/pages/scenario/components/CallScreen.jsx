@@ -1,26 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button } from '../../../components/Button';
+import AutoPlayTTS from '../../news/components/AutoPlayTTS';
 
 export default function CallScreen({ simuationData, onNext }) {
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
-  const [showNextButton, setShowNextButton] = useState(false);
+  const [showNextButton, setShowNextButton] = useState(true);
 
-  useEffect(() => {
-    // 3초 간격으로 다음 메시지 표시
-    const timer = setInterval(() => {
-      setCurrentMessageIndex(prev => {
-        if (prev < simuationData.length - 1) {
-          return prev + 1;
-        } else {
-          clearInterval(timer);
-          setShowNextButton(true);
-          return prev;
-        }
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
+  const handleTTSEnd = () => {
+    if (currentMessageIndex < simuationData.length - 1) {
+      setCurrentMessageIndex(prev => prev + 1);
+    } else {
+      setShowNextButton(true);
+    }
+  };
 
   return (
     <div className='flex w-80 flex-col items-center gap-4'>
@@ -45,6 +37,10 @@ export default function CallScreen({ simuationData, onNext }) {
             <div className='text-center text-2xl font-semibold text-white'>
               {simuationData[currentMessageIndex].text}
             </div>
+            <AutoPlayTTS
+              ttsUrl={simuationData[currentMessageIndex].tts_url}
+              onEnded={handleTTSEnd}
+            />
           </div>
         </div>
       </div>

@@ -29,7 +29,6 @@ export default function HomePage() {
   const getAllSimulations = async () => {
     try {
       const simulations = await fetchAllSimulations();
-      console.log(simulations);
       setPopular(simulations.popular_books || []);
       setLatest(simulations.latest_books || []);
       setRecommended(simulations.recommended_books || []);
