@@ -71,7 +71,7 @@ export default function NewsSummaryPage() {
   }
 
   return (
-    <div className='flex min-h-screen flex-col items-center bg-gray-50 p-6'>
+    <div className='flex h-full flex-col items-center justify-between bg-gray-50 p-6'>
       {/* 헤더 */}
       <div className='mb-8 flex w-full items-center'>
         <button onClick={() => navigate(-1)} className='mr-4'>
@@ -131,7 +131,7 @@ export default function NewsSummaryPage() {
         {currentPage > 0 && (
           <Button
             onClick={handlePrevPage}
-            className='h-16 w-full rounded-2xl bg-white text-2xl font-bold text-gray-900 transition-all duration-200 hover:bg-gray-100'
+            className='h-16 w-full rounded-2xl border-2 border-gray-200 bg-white text-xl font-bold text-gray-900 transition-all duration-200 hover:bg-gray-100'
           >
             이전 페이지
           </Button>
@@ -139,14 +139,14 @@ export default function NewsSummaryPage() {
         {!isLastPage ? (
           <Button
             onClick={handleNextPage}
-            className='bg-sjz-red-main h-16 w-full rounded-2xl text-2xl font-bold text-white transition-all duration-200 hover:bg-red-600'
+            className='bg-sjz-red-main h-16 w-full rounded-2xl text-xl font-bold text-white transition-all duration-200 hover:bg-red-600'
           >
             다음 페이지
           </Button>
         ) : (
           <Button
             onClick={() => navigate('/')}
-            className='bg-sjz-red-main h-16 w-full rounded-2xl text-2xl font-bold text-white transition-all duration-200 hover:bg-red-600'
+            className='bg-sjz-red-main h-16 w-full rounded-2xl text-xl font-bold text-white transition-all duration-200 hover:bg-red-600'
           >
             홈으로 돌아가기
           </Button>

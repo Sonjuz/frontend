@@ -69,7 +69,7 @@ export default function ChoiceScreen({ choices, onSelect }) {
         </h2>
       </div>
       {choices && (
-        <div className='flex flex-col gap-2'>
+        <div className='flex h-full flex-col justify-center gap-2'>
           {choices.map(choice => (
             <button
               key={choice.choiceId}
