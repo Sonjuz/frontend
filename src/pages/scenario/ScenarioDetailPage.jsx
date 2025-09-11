@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { Button } from '../../components/Button';
-import { SMISHING_SCENARIO } from '../../constants/scenario';
 import Loading from '../../components/Loading';
+import { fetchSimulationById } from '../../api';
 
-const ScenarioDetailHeader = () => {
+const ScenarioDetailHeader = ({ book }) => {
   const navigate = useNavigate();
 
   const handleBack = () => {
     navigate('/');
   };
 
-  const tilte = fraud_type => {
+  const title = fraud_type => {
     switch (fraud_type) {
       case 'smishing':
         return '스미싱';
@@ -30,9 +30,7 @@ const ScenarioDetailHeader = () => {
         />
       </button>
       <div className='flex flex-col'>
-        <div className='text-lg font-bold'>
-          {tilte(SMISHING_SCENARIO.fraud_type)}
-        </div>
+        <div className='text-lg font-bold'>{title(book.fraud_type)}</div>
       </div>
     </div>
   );
@@ -110,35 +108,65 @@ const ListeningScenarioSection = () => {
 
 export default function ScenarioDetailPage() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const location = useLocation();
+  const { id } = useParams();
+  const [book, setBook] = useState(null);
+
+  // location.state나 sessionStorage에서 cover_image 가져오기
+  const storedData = sessionStorage.getItem(`scenario_${id}`);
+  const cover_image =
+    location.state?.cover_image ||
+    (storedData ? JSON.parse(storedData).cover_image : null);
+
   const navigate = useNavigate();
   const navigateToHome = () => {
     navigate('/');
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-  }, []);
+    const fetchBook = async () => {
+      try {
+        const response = await fetchSimulationById(id);
+        setBook(response);
+      } catch (error) {
+        console.error('Error fetching book:', error);
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBook();
+  }, [id, navigate]);
 
   if (isLoading) {
     return <Loading />;
   }
 
+  if (isError) {
+    return <div>Error</div>;
+  }
+
   return (
     <div className='flex h-full flex-col pb-4'>
-      <ScenarioDetailHeader />
+      <ScenarioDetailHeader book={book} />
       <div className='flex flex-col items-center px-6'>
-        <div className='mb-4 flex h-28 w-20 items-center justify-center rounded-lg bg-gray-200'>
+        <div className='mb-4 flex h-28 w-20 items-center justify-center overflow-hidden rounded-lg bg-gray-200'>
           <img
-            src='/images/temp-book.png'
-            alt={SMISHING_SCENARIO.scenario_title}
+            src={cover_image || book.cover_image || '/images/temp-book.png'}
+            alt={book.scenario_title}
             className='h-full w-full rounded-lg object-cover'
+            onError={e => {
+              e.target.src = '/images/temp-book.png';
+              // 에러 발생 시 sessionStorage에서도 제거
+              sessionStorage.removeItem(`scenario_${id}`);
+            }}
           />
         </div>
         <div className='mb-2 flex flex-col gap-y-1'>
           <p className='text-center text-2xl font-bold break-keep'>
-            {SMISHING_SCENARIO.scenario_title}
+            {book.scenario_title}
           </p>
           <p className='text-center text-base text-gray-600'>
             실제 발생할 수 있는 상황을 체험하며 올바른 대응 방법을 학습해보세요.

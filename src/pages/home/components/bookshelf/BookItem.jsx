@@ -4,12 +4,16 @@ export default function BookItem({ book }) {
   const navigate = useNavigate();
 
   const handleClick = book => {
-    navigate('/scenario/detail', {
-      state: {
-        scenarioId: book.id,
-        title: book.title,
-        icon: book.icon,
-      },
+    // 페이지 새로고침 시에도 유지되도록 sessionStorage에 저장
+    sessionStorage.setItem(
+      `scenario_${book.id}`,
+      JSON.stringify({
+        cover_image: book.cover_image,
+      })
+    );
+
+    navigate(`/scenario/${book.id}`, {
+      state: { cover_image: book.cover_image },
     });
   };
 
@@ -20,7 +24,7 @@ export default function BookItem({ book }) {
       </div>
       <img
         src={book.cover_image}
-        alt={book.title}
+        alt={book.scenario_title}
         className='h-36 w-24 rounded-lg'
         onClick={() => handleClick(book)}
       />

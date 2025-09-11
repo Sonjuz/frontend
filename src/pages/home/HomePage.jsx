@@ -36,10 +36,6 @@ export default function HomePage() {
     getAllSimulations();
   }, []);
 
-  useEffect(() => {
-    console.log(popular, latest, recommended);
-  }, [popular, latest, recommended]);
-
   if (isLoading) {
     return <Loading />;
   }

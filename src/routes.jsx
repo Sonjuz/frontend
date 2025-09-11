@@ -35,7 +35,7 @@ export const router = createBrowserRouter([
         element: <SimulationPage />,
       },
       {
-        path: 'scenario/detail',
+        path: 'scenario/:id',
         element: <ScenarioDetailPage />,
       },
       {
