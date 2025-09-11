@@ -1,13 +1,16 @@
 import ShelfRow from './ShelfRow';
 
 export default function Bookshelf({ books }) {
-  const [bestBooks, newBooks, defaultBooks] = books;
+  const [popular, latest, recommended] = books;
 
   return (
-    <div className='flex h-110 flex-col items-center'>
-      <ShelfRow books={bestBooks} />
-      <ShelfRow books={newBooks} />
-      <ShelfRow books={defaultBooks} />
+    <div className='flex h-120 flex-col gap-2'>
+      <div className='text-xl font-bold text-gray-600'>인기 책</div>
+      <ShelfRow books={popular} />
+      <div className='text-xl font-bold text-gray-600'>최신 책</div>
+      <ShelfRow books={latest} />
+      <div className='text-xl font-bold text-gray-600'>추천 책</div>
+      <ShelfRow books={recommended} />
     </div>
   );
 }
