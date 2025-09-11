@@ -100,8 +100,6 @@ export default function NewsSummaryPage() {
           <StoryCard
             key={currentPage}
             title={summaryData.title}
-            alt={currentNews.alt}
-            image={currentNews.imageUrl}
             description={currentNews.text}
             ttsUrl={currentNews.ttsUrl}
             onTTSEnd={handleNextPage}
