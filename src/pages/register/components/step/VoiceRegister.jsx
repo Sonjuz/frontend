@@ -11,8 +11,8 @@ const RecordScriptSection = ({ onAudioFileChange }) => {
         다음 문장을 읽어주세요
       </div>
       <div className='flex items-center justify-center text-base text-gray-500'>
-        <img src='/icons/time.svg' alt='' className='mr-1 h-4 w-4' />
-        <span>최소 1분 녹음 진행</span>
+        <img src='/icons/time.svg' alt='녹음 시간' className='mr-1 h-4 w-4' />
+        <span>최대 1분 녹음 진행</span>
       </div>
       <div className='scrollbar-hide mb-8 h-80 w-full overflow-y-auto rounded-xl bg-gray-50 p-4'>
         <p className='text-lg leading-relaxed break-keep whitespace-pre-line text-gray-800'>

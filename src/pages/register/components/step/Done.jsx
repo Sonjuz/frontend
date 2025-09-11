@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 const ResultSection = ({ handleCopyUrl }) => {
   const baseUrl = 'http://localhost:5173/';
   const [profile_url, setProfile_url] = useState(null);
-
   const getProfileUrl = () => {
     const url = localStorage.getItem('profile_url');
     return url;
@@ -72,8 +71,13 @@ export default function Done() {
           있습니다.
         </div>
       </div>
-
       <ResultSection handleCopyUrl={handleCopyUrl} />
+      <Button
+        onClick={() => {}}
+        className='bg-sjz-blue h-15 w-full text-xl font-bold text-white'
+      >
+        문자로 공유하기
+      </Button>
       <Button
         onClick={navigateToHome}
         className='bg-sjz-red-main h-15 w-full text-xl font-bold text-white'
