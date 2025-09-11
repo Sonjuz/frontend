@@ -1,9 +1,22 @@
 import { Button } from '../../../../components/Button';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 const ResultSection = ({ handleCopyUrl }) => {
-  const baseUrl = 'https://safeguard.app/profile/';
-  const tokenUrl = '2xa5f668pjf5mygmi';
+  const baseUrl = 'https://localhost:5173';
+  const [profile_url, setProfile_url] = useState(null);
+
+  const getProfileUrl = () => {
+    const url = localStorage.getItem('profile_url');
+    return url;
+  };
+
+  useEffect(() => {
+    const url = getProfileUrl();
+    console.log(url);
+    setProfile_url(url);
+    console.log(profile_url);
+  }, [profile_url]);
 
   return (
     <div className='flex h-90 w-80 flex-col gap-y-2 rounded-2xl bg-white p-6 text-center shadow-xl outline-1 outline-offset-[-1px] outline-gray-100'>
@@ -18,15 +31,15 @@ const ResultSection = ({ handleCopyUrl }) => {
       </div>
       <div className='rounded-xl bg-gray-50 p-3'>
         <div
-          onClick={() => handleCopyUrl(baseUrl + tokenUrl)}
+          onClick={() => handleCopyUrl(baseUrl + profile_url)}
           className='flex cursor-pointer flex-wrap justify-center text-lg text-blue-600 hover:underline'
         >
           <span>{baseUrl}</span>
-          <span>{tokenUrl}</span>
+          <span>{profile_url}</span>
         </div>
       </div>
       <button
-        onClick={() => handleCopyUrl(baseUrl + tokenUrl)}
+        onClick={() => handleCopyUrl(baseUrl + profile_url)}
         className='flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-blue-100 px-4 py-3 text-lg font-medium text-blue-700'
       >
         <img src='/icons/register-copy.svg' alt='복사' className='size-6' />
