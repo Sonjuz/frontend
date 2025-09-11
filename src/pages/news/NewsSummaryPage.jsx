@@ -44,10 +44,8 @@ export default function NewsSummaryPage() {
   }, [id]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
+    if (scenes.length !== 0) setIsLoading(false);
+  }, [scenes]);
 
   if (isLoading) {
     return <Loading />;
@@ -73,17 +71,15 @@ export default function NewsSummaryPage() {
 
   return (
     <div className='flex h-full flex-col items-center justify-between bg-gray-50 p-6'>
-      {/* 헤더 */}
       <div className='mb-8 flex w-full items-center'>
         <button onClick={() => navigate(-1)} className='mr-4'>
           <img src='/icons/back-btn.svg' alt='뒤로가기' className='h-12 w-12' />
         </button>
         <h1 className='text-3xl font-bold'>오늘의 뉴스</h1>
       </div>
-
-      {/* 페이지 컨텐츠 */}
+      {isLoading && <Loading />}
       <div className='w-full'>
-        {isLastPage ? (
+        {!isLoading && isLastPage ? (
           <div className='content-fade-in flex h-full flex-col items-center justify-center gap-8 rounded-2xl bg-white p-8 shadow-2xl'>
             <img
               src='/images/character-success.png'
@@ -97,8 +93,6 @@ export default function NewsSummaryPage() {
               내일도 새로운 소식으로 찾아올게요.
             </p>
           </div>
-        ) : isLoading ? (
-          <Loading />
         ) : (
           <StoryCard
             key={currentPage}
@@ -111,7 +105,6 @@ export default function NewsSummaryPage() {
         )}
       </div>
 
-      {/* 페이지 인디케이터 */}
       <div className='mt-4 flex items-center gap-2'>
         {scenes.map((_, index) => (
           <div
@@ -127,8 +120,6 @@ export default function NewsSummaryPage() {
           }`}
         />
       </div>
-
-      {/* 하단 버튼 */}
       <div className='mt-8 flex w-full gap-4'>
         {currentPage > 0 && (
           <Button
