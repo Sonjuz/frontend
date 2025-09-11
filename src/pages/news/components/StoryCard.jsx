@@ -9,7 +9,7 @@ export default function StoryCard({
   onTTSEnd,
 }) {
   return (
-    <div className='content-fade-in flex h-140 w-full flex-col items-center gap-6 rounded-3xl bg-white p-4'>
+    <div className='content-fade-in flex h-140 w-full flex-col items-center gap-6 rounded-2xl bg-white p-4 shadow-2xl'>
       <h2 className='content-fade-in text-3xl font-bold text-gray-900 delay-100'>
         {title}
       </h2>

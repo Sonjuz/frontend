@@ -83,16 +83,16 @@ export default function NewsSummaryPage() {
       {/* 페이지 컨텐츠 */}
       <div className='w-full'>
         {isLastPage ? (
-          <div className='content-fade-in flex h-full flex-col items-center justify-center gap-8 rounded-xl bg-white p-8'>
+          <div className='content-fade-in flex h-full flex-col items-center justify-center gap-8 rounded-2xl bg-white p-8 shadow-2xl'>
             <img
               src='/images/character-success.png'
               alt='완료'
               className='size-48'
             />
-            <h2 className='text-3xl font-bold text-gray-900'>
+            <div className='text-center text-3xl font-bold break-keep text-gray-900'>
               오늘의 뉴스를 모두 읽었어요!
-            </h2>
-            <p className='text-center text-2xl text-gray-700'>
+            </div>
+            <p className='text-center text-2xl break-keep text-gray-700'>
               내일도 새로운 소식으로 찾아올게요.
             </p>
           </div>
