@@ -83,7 +83,7 @@ export default function NewsSummaryPage() {
       {/* 페이지 컨텐츠 */}
       <div className='w-full'>
         {isLastPage ? (
-          <div className='flex h-full flex-col items-center justify-center gap-8'>
+          <div className='content-fade-in flex h-full flex-col items-center justify-center gap-8 rounded-xl bg-white p-8'>
             <img
               src='/images/character-success.png'
               alt='완료'
@@ -98,11 +98,12 @@ export default function NewsSummaryPage() {
           </div>
         ) : (
           <StoryCard
+            key={currentPage}
             title={summaryData.title}
             alt={currentNews.alt}
-            image={currentNews.image_url}
+            image={currentNews.imageUrl}
             description={currentNews.text}
-            ttsUrl={currentNews.tts_url}
+            ttsUrl={currentNews.ttsUrl}
             onTTSEnd={handleNextPage}
           />
         )}

@@ -7,7 +7,24 @@
   --color-sjz-blue: #3b82f6;
 }
 
+@keyframes pageContentFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @layer utilities {
+  .content-fade-in {
+    animation: pageContentFadeIn 0.5s ease-in-out forwards;
+    will-change: opacity;
+  }
+
+  .content-delay {
+    animation-delay: 0.3s;
+  }
   .sjz-width {
     width: 393px;
   }
