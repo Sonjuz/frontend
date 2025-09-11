@@ -1,20 +1,21 @@
 import { ProgressBar } from '../components/Progressbar';
-import { VOICE_PHISHING_SCENARIO } from '../../../constants/scenario';
 import { useState, useEffect } from 'react';
 import CallScreen from '../components/CallScreen';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import MessageScreen from '../components/MessageScreen';
 import ChoiceScreen from '../components/ChoiceScreen';
 import EndScreen from '../components/EndScreen';
 import Loading from '../../../components/Loading';
+import { fetchSimulationById } from '../../../api';
 
 const SimulationHeader = () => {
   const navigate = useNavigate();
 
-  const handleBack = () => {
-    navigate('/');
-  };
+  const { id } = useParams();
 
+  const handleBack = () => {
+    navigate(`/scenario/${id}`);
+  };
   return (
     <div className='flex w-full items-center p-4'>
       <button onClick={handleBack} className='mr-2'>
@@ -50,6 +51,7 @@ const NoticeCard = () => {
 
 export default function SimulationPage() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [stepsLength, setStepsLength] = useState(0);
   const [score, setScore] = useState(0);
@@ -57,11 +59,7 @@ export default function SimulationPage() {
   const [sender, setSender] = useState(null);
   const [totalChoice, setTotalChoice] = useState(0);
 
-  useEffect(() => {
-    setStepsLength(VOICE_PHISHING_SCENARIO.steps.length);
-    setSimuationStepsData(VOICE_PHISHING_SCENARIO.steps);
-    setSender(VOICE_PHISHING_SCENARIO.target_impersonation);
-  }, []);
+  const { id } = useParams();
 
   const handleNext = () => {
     setCurrentStep(prev => prev + 1);
@@ -78,6 +76,21 @@ export default function SimulationPage() {
     return (score / totalChoice) * 100;
   };
 
+  const getSimulationById = async id => {
+    try {
+      const response = await fetchSimulationById(id);
+      console.log(response);
+      setSimuationStepsData(response.steps);
+      setStepsLength(response.steps.length);
+      setSender(response.target_impersonation);
+    } catch (error) {
+      console.error('Error fetching simulation:', error);
+      setIsError(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (
       simuationStepsData &&
@@ -89,13 +102,15 @@ export default function SimulationPage() {
   }, [currentStep]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-  }, []);
+    getSimulationById(id);
+  }, [id]);
 
   if (isLoading) {
     return <Loading />;
+  }
+
+  if (isError) {
+    return <div>Error</div>;
   }
 
   return (

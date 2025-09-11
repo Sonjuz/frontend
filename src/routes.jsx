@@ -31,7 +31,7 @@ export const router = createBrowserRouter([
         element: <ProfileRegisterPage />,
       },
       {
-        path: 'simulation',
+        path: 'simulation/:id',
         element: <SimulationPage />,
       },
       {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import Loading from '../../components/Loading';
 import { fetchSimulationById } from '../../api';
@@ -39,6 +39,8 @@ const ScenarioDetailHeader = ({ book }) => {
 const ScenarioTrySection = () => {
   const navigate = useNavigate();
 
+  const { id } = useParams();
+
   return (
     <div className='flex items-center gap-2'>
       <div className='flex flex-col gap-4 rounded-xl border border-gray-300 bg-white p-4 shadow-2xl'>
@@ -59,7 +61,7 @@ const ScenarioTrySection = () => {
         </div>
         <Button
           icon='/icons/simulate.svg'
-          onClick={() => navigate('/simulation')}
+          onClick={() => navigate(`/simulation/${id}`)}
           className={
             'bg-gradient-to-r from-[#F87171] to-[#EF4444] text-white focus:ring-2 focus:ring-[#EF4444] focus:ring-offset-2 focus:outline-none'
           }
