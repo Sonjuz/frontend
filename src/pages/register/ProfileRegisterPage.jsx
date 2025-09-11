@@ -5,6 +5,7 @@ import Done from './components/step/Done';
 import { ProgressBar } from './components/ProgressBar';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { registerProfile } from '../../api';
 
 const ProfileRegisterHeader = () => {
   const navigate = useNavigate();
@@ -49,13 +50,25 @@ export default function RegisterPage() {
   };
 
   const handleNextStep = async () => {
-    if (currentStep >= 3) return;
+    if (currentStep === steps.length - 1) {
+      await handleRegister();
+      return;
+    }
     setCurrentStep(currentStep + 1);
   };
 
   const handlePrevStep = () => {
     if (currentStep <= 0) return;
     setCurrentStep(currentStep - 1);
+  };
+
+  const handleRegister = async () => {
+    try {
+      const response = await registerProfile(profileData);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
