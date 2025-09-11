@@ -79,7 +79,6 @@ export default function SimulationPage() {
   const getSimulationById = async id => {
     try {
       const response = await fetchSimulationById(id);
-      console.log(response);
       setSimuationStepsData(response.steps);
       setStepsLength(response.steps.length);
       setSender(response.target_impersonation);
