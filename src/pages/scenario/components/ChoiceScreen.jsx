@@ -19,7 +19,7 @@ export default function ChoiceScreen({ choices, onSelect }) {
       <div className='flex h-full w-full flex-col items-center gap-y-4 p-4'>
         <img
           src={
-            selectedChoice.is_correct
+            selectedChoice.isCorrect
               ? '/images/character-success.png'
               : '/images/character-fail.png'
           }
@@ -28,12 +28,10 @@ export default function ChoiceScreen({ choices, onSelect }) {
         />
         <div className='border-sjz-red-main flex flex-col items-center gap-4 rounded-2xl border-2 bg-white p-6 text-center'>
           <h2 className='text-sjz-red-main text-2xl font-bold'>
-            {selectedChoice.is_correct
-              ? '정답이에요!'
-              : '이렇게 하면 위험해요!'}
+            {selectedChoice.isCorrect ? '정답이에요!' : '이렇게 하면 위험해요!'}
           </h2>
           <p className='text-center text-xl text-gray-700'>
-            {selectedChoice.result_message}
+            {selectedChoice.resultMessage}
           </p>
         </div>
         <div className='w-full rounded-2xl bg-blue-50 p-4'>
@@ -48,7 +46,7 @@ export default function ChoiceScreen({ choices, onSelect }) {
                 이렇게 기억하세요!
               </h3>
               <p className='text-lg text-blue-800'>
-                {selectedChoice.education_point}
+                {selectedChoice.educationPoint}
               </p>
             </div>
           </div>
@@ -74,14 +72,14 @@ export default function ChoiceScreen({ choices, onSelect }) {
         <div className='flex flex-col gap-2'>
           {choices.map(choice => (
             <button
-              key={choice.choice_id}
+              key={choice.choiceId}
               onClick={() => handleChoiceClick(choice)}
               className='hover:border-sjz-red-main hover:bg-sjz-red-bright focus:ring-sjz-red-main flex min-h-24 w-full cursor-pointer items-center rounded-2xl border-2 border-gray-200 bg-white p-6 text-left text-xl focus:ring-2 focus:ring-offset-2 focus:outline-none'
             >
               <span className='mr-4 flex size-8 shrink-0 items-center justify-center rounded-full bg-gray-100 text-lg font-bold'>
-                {choice.choice_id}
+                {choice.choiceId}
               </span>
-              {choice.choice_text}
+              {choice.choiceText}
             </button>
           ))}
         </div>
