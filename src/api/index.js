@@ -43,9 +43,11 @@ export const fetchSimulationById = async id => {
 };
 
 export const fetchSummaryById = async id => {
+  const voiceId = localStorage.getItem('profile_url');
   try {
     const response = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/v1/book/${id}/summary`
+      `${import.meta.env.VITE_API_URL}/api/v1/book/${id}/summary`,
+      voiceId ? { voiceId } : undefined
     );
     return response.data.data;
   } catch (error) {
