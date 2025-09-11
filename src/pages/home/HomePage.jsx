@@ -5,9 +5,11 @@ import Bookshelf from './components/bookshelf/Bookshelf';
 import { useEffect, useState } from 'react';
 import Loading from '../../components/Loading';
 import { fetchAllSimulations } from '../../api';
+import Modal from '../../components/Modal';
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
+
   const [isError, setIsError] = useState(false);
   const [popular, setPopular] = useState([]);
   const [latest, setLatest] = useState([]);
@@ -41,7 +43,19 @@ export default function HomePage() {
   }
 
   if (isError) {
-    return <div>Error</div>;
+    return (
+      <Modal
+        isOpen={isError}
+        title='문제가 발생했어요'
+        description='문제가 발생했어요.잠시 후 다시 시도해주세요.'
+        image='/icons/family-register.svg'
+        type='warning'
+        onConfirm={() => {
+          window.location.reload();
+        }}
+        confirmText='다시 시도하기'
+      />
+    );
   }
 
   const allBooks = [popular, latest, recommended];

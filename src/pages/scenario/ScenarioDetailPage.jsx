@@ -3,6 +3,7 @@ import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import Loading from '../../components/Loading';
 import { fetchSimulationById } from '../../api';
+import Modal from '../../components/Modal';
 
 const ScenarioDetailHeader = ({ book }) => {
   const navigate = useNavigate();
@@ -147,7 +148,19 @@ export default function ScenarioDetailPage() {
   }
 
   if (isError) {
-    return <div>Error</div>;
+    return (
+      <Modal
+        isOpen={isError}
+        title='문제가 발생했어요'
+        description='문제가 발생했어요.잠시 후 다시 시도해주세요.'
+        image='/icons/family-register.svg'
+        type='warning'
+        onConfirm={() => {
+          window.location.reload();
+        }}
+        confirmText='다시 시도하기'
+      />
+    );
   }
 
   return (

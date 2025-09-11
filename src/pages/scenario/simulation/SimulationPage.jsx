@@ -7,6 +7,7 @@ import ChoiceScreen from '../components/ChoiceScreen';
 import EndScreen from '../components/EndScreen';
 import Loading from '../../../components/Loading';
 import { fetchSimulationById } from '../../../api';
+import Modal from '../../../components/Modal';
 
 const SimulationHeader = () => {
   const navigate = useNavigate();
@@ -109,7 +110,19 @@ export default function SimulationPage() {
   }
 
   if (isError) {
-    return <div>Error</div>;
+    return (
+      <Modal
+        isOpen={isError}
+        title='문제가 발생했어요'
+        description='문제가 발생했어요.잠시 후 다시 시도해주세요.'
+        image='/icons/family-register.svg'
+        type='warning'
+        onConfirm={() => {
+          window.location.reload();
+        }}
+        confirmText='다시 시도하기'
+      />
+    );
   }
 
   return (

@@ -6,6 +6,7 @@ import { ProgressBar } from './components/ProgressBar';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerProfile } from '../../api';
+import Modal from '../../components/Modal';
 
 const ProfileRegisterHeader = () => {
   const navigate = useNavigate();
@@ -78,7 +79,19 @@ export default function RegisterPage() {
   };
 
   if (isError) {
-    return <div>Error</div>;
+    return (
+      <Modal
+        isOpen={isError}
+        title='문제가 발생했어요'
+        description='문제가 발생했어요.잠시 후 다시 시도해주세요.'
+        image='/icons/family-register.svg'
+        type='warning'
+        onConfirm={() => {
+          window.location.reload();
+        }}
+        confirmText='다시 시도하기'
+      />
+    );
   }
 
   return (
