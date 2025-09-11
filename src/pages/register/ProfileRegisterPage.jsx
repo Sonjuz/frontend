@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerProfile } from '../../api';
 import Modal from '../../components/Modal';
+import Loading from '../../components/Loading';
 
 const ProfileRegisterHeader = () => {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ const ProfileRegisterHeader = () => {
 
 export default function RegisterPage() {
   const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const steps = [1, 2, 3];
 
@@ -69,14 +71,22 @@ export default function RegisterPage() {
   };
 
   const handleRegister = async () => {
+    setIsLoading(true);
     try {
       const response = await registerProfile(profileData);
       localStorage.setItem('profile_url', response.id);
       return response.id;
     } catch (error) {
       console.error(error);
+      throw error;
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   if (isError) {
     return (
