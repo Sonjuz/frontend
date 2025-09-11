@@ -38,15 +38,15 @@
 
 @layer utilities {
   .animate-swing-in-left-fwd {
-    -webkit-animation: swing-in-left-fwd 0.8s both;
-    animation: swing-in-left-fwd 0.8s both;
+    -webkit-animation: swing-in-left-fwd 2s both;
+    animation: swing-in-left-fwd 2s both;
   }
 }
 
 @layer utilities {
   .animate-swing-in-left-bck {
-    -webkit-animation: swing-in-left-bck 0.8s both;
-    animation: swing-in-left-bck 0.8s both;
+    -webkit-animation: swing-in-left-bck 2s both;
+    animation: swing-in-left-bck 2s both;
   }
 }
 

@@ -19,8 +19,10 @@ export default function StoryCard({
           <AutoPlayTTS ttsUrl={ttsUrl} onEnded={onTTSEnd} />
         </div>
       </div>
-      <div className='h-full w-4 rounded-r-2xl border-r-2 border-gray-200' />
-      <div className='h-full w-4 rounded-r-2xl border-t-2 border-r-2 border-b-2 border-gray-200' />
+      <div className='h-full w-4 rounded-r-2xl border-t-1 border-r-1 border-b-1 border-gray-200' />
+      <div className='h-full w-4 rounded-r-2xl border-t-1 border-r-1 border-b-1 border-gray-200' />
+      <div className='h-full w-4 rounded-r-2xl border-t-1 border-r-1 border-b-1 border-gray-200' />
+      <div className='h-full w-4 rounded-r-2xl border-t-1 border-r-1 border-b-1 border-gray-200' />
     </div>
   );
 }
