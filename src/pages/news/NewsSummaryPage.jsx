@@ -1,61 +1,57 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import { useState, useEffect } from 'react';
 import Loading from '../../components/Loading';
-
-const NEWS_SUMMARY = [
-  {
-    id: 1,
-    story_image: '/images/news-1.png',
-    title: '보이스피싱 사기 주의보',
-    description:
-      '옛날 옛적에 한 사람이 가족을 사칭해 금전을 요구하는 사기가 있었어요. 하지만 우리 모두가 잘 알고 대처하여 피해를 막을 수 있었답니다.',
-  },
-  {
-    id: 2,
-    story_image: '/images/news-2.png',
-    title: '우리 동네 보이스피싱 예방',
-    description:
-      '우리 동네에서는 모두가 힘을 합쳐 보이스피싱을 예방하고 있어요. 수상한 전화는 바로 끊고, 가족들과 상의하는 것이 가장 중요해요.',
-  },
-];
+import { fetchSummaryById } from '../../api';
 
 const StoryCard = ({ title, image, description }) => (
-  <div className='flex w-full flex-col items-center gap-6 rounded-3xl bg-white p-8'>
+  <div className='flex h-140 w-full flex-col items-center gap-6 rounded-3xl bg-white p-4'>
     <h2 className='text-3xl font-bold text-gray-900'>{title}</h2>
-    <div className='relative aspect-[4/3] w-full overflow-hidden rounded-2xl border-8 border-gray-100'>
+    <div className='relative w-full overflow-hidden rounded-2xl border-8 border-gray-100'>
       <img src={image} alt={title} className='h-full w-full object-cover' />
     </div>
-    <p className='text-center text-2xl leading-relaxed text-gray-700'>
+    <div className='flex items-center justify-center text-center text-2xl break-keep text-gray-700'>
       {description}
-    </p>
+    </div>
   </div>
 );
 
 export default function NewsSummaryPage() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const [summaryData, setSummaryData] = useState([]);
+  const [scenes, setScenes] = useState([]);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(0);
-  const [isFlipping, setIsFlipping] = useState(false);
+  const { id } = useParams();
 
   const handleNextPage = () => {
-    setIsFlipping(true);
-    setTimeout(() => {
-      setCurrentPage(prev => prev + 1);
-      setIsFlipping(false);
-    }, 500);
+    setCurrentPage(prev => prev + 1);
   };
 
   const handlePrevPage = () => {
-    setIsFlipping(true);
-    setTimeout(() => {
-      setCurrentPage(prev => prev - 1);
-      setIsFlipping(false);
-    }, 500);
+    setCurrentPage(prev => prev - 1);
   };
 
-  const isLastPage = currentPage === NEWS_SUMMARY.length;
-  const currentNews = NEWS_SUMMARY[currentPage];
+  const getSummaryData = async () => {
+    try {
+      const response = await fetchSummaryById(id);
+      setSummaryData(response);
+      setScenes(response.scenes);
+    } catch (error) {
+      console.error('Error fetching summary data:', error);
+      setIsError(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const isLastPage = currentPage === scenes.length;
+  const currentNews = scenes[currentPage];
+
+  useEffect(() => {
+    getSummaryData();
+  }, [id]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -65,6 +61,24 @@ export default function NewsSummaryPage() {
 
   if (isLoading) {
     return <Loading />;
+  }
+
+  if (isError) {
+    return (
+      <div className='flex h-full flex-col items-center justify-center gap-8'>
+        <img src='/images/character-fail.png' alt='에러' className='size-48' />
+        <h2 className='text-3xl font-bold text-gray-900'>문제가 발생했어요</h2>
+        <p className='text-center text-2xl text-gray-700'>
+          잠시 후 다시 시도해주세요
+        </p>
+        <Button
+          onClick={() => window.location.reload()}
+          className='bg-sjz-red-main h-16 w-80 rounded-2xl text-2xl font-bold text-white'
+        >
+          다시 시도하기
+        </Button>
+      </div>
+    );
   }
 
   return (
@@ -78,60 +92,33 @@ export default function NewsSummaryPage() {
       </div>
 
       {/* 페이지 컨텐츠 */}
-      <div className='relative flex w-full overflow-hidden'>
-        <div
-          className={`w-full flex-shrink-0 transform-gpu transition-all duration-500 ease-in-out ${
-            isFlipping
-              ? currentPage > 0
-                ? 'translate-x-full opacity-0'
-                : '-translate-x-full opacity-0'
-              : 'translate-x-0 opacity-100'
-          }`}
-        >
-          {isLastPage ? (
-            <div className='flex h-full flex-col items-center justify-center gap-8'>
-              <img
-                src='/images/character-success.png'
-                alt='완료'
-                className='size-48'
-              />
-              <h2 className='text-3xl font-bold text-gray-900'>
-                오늘의 뉴스를 모두 읽었어요!
-              </h2>
-              <p className='text-center text-2xl text-gray-700'>
-                내일도 새로운 소식으로 찾아올게요.
-              </p>
-            </div>
-          ) : (
-            <StoryCard
-              title={currentNews.title}
-              image={currentNews.story_image}
-              description={currentNews.description}
+      <div className='w-full'>
+        {isLastPage ? (
+          <div className='flex h-full flex-col items-center justify-center gap-8'>
+            <img
+              src='/images/character-success.png'
+              alt='완료'
+              className='size-48'
             />
-          )}
-        </div>
-        <div
-          className={`absolute top-0 left-0 w-full flex-shrink-0 transform-gpu transition-all duration-500 ease-in-out ${
-            isFlipping
-              ? 'translate-x-0 opacity-100'
-              : currentPage > 0
-                ? '-translate-x-full opacity-0'
-                : 'translate-x-full opacity-0'
-          }`}
-        >
-          {currentPage > 0 && !isLastPage && (
-            <StoryCard
-              title={NEWS_SUMMARY[currentPage - 1].title}
-              image={NEWS_SUMMARY[currentPage - 1].story_image}
-              description={NEWS_SUMMARY[currentPage - 1].description}
-            />
-          )}
-        </div>
+            <h2 className='text-3xl font-bold text-gray-900'>
+              오늘의 뉴스를 모두 읽었어요!
+            </h2>
+            <p className='text-center text-2xl text-gray-700'>
+              내일도 새로운 소식으로 찾아올게요.
+            </p>
+          </div>
+        ) : (
+          <StoryCard
+            title={summaryData.title}
+            image={currentNews.image_url}
+            description={currentNews.image_des}
+          />
+        )}
       </div>
 
       {/* 페이지 인디케이터 */}
       <div className='mt-4 flex items-center gap-2'>
-        {NEWS_SUMMARY.map((_, index) => (
+        {scenes.map((_, index) => (
           <div
             key={index}
             className={`h-2 w-2 rounded-full ${

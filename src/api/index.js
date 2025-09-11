@@ -41,3 +41,14 @@ export const fetchSimulationById = async id => {
     throw new Error(error);
   }
 };
+
+export const fetchSummaryById = async id => {
+  try {
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_URL}/api/v1/book/${id}/summary`
+    );
+    return response.data.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
