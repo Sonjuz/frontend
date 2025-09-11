@@ -64,13 +64,15 @@ export default function HomePage() {
     );
   }
 
-  const allBooks = [popular, latest, recommended];
-
   return (
     <div className='flex h-full flex-col items-center'>
       <HomeHeader />
-      <div className='my-1 flex h-full flex-col items-center justify-between'>
-        <Bookshelf books={allBooks} />
+      <div className='flex h-full flex-col items-center gap-y-4 py-4'>
+        <Bookshelf
+          popular={popular}
+          latest={latest}
+          recommended={recommended}
+        />
         <Button
           className='bg-sjz-red-main h-16 w-80 rounded-xl text-2xl font-bold text-white'
           onClick={handleStart}

@@ -19,13 +19,18 @@ export default function BookItem({ book }) {
 
   return (
     <div className='h-36 w-24 cursor-pointer'>
-      <div className='text-sm font-bold text-gray-600'>
+      <div className='mb-1 w-24 overflow-hidden text-sm font-bold whitespace-nowrap text-gray-600'>
         {book.target_impersonation}
       </div>
       <img
         src={book.cover_image}
         alt={book.scenario_title}
-        className='h-36 w-24 rounded-lg'
+        className='h-32 w-24 transform rounded-r-xl border border-gray-300 bg-gradient-to-r from-gray-200 via-white to-white shadow-[2px_2px_10px_rgba(0,0,0,0.1),_-1px_-1px_4px_rgba(0,0,0,0.05)] transition-transform hover:scale-105 hover:shadow-[4px_4px_20px_rgba(0,0,0,0.15),_-2px_-2px_8px_rgba(0,0,0,0.08)]'
+        style={{
+          perspective: '500px',
+          transformStyle: 'preserve-3d',
+          boxShadow: 'inset -8px 0 8px -8px rgba(0,0,0,0.4)',
+        }}
         onClick={() => handleClick(book)}
       />
     </div>

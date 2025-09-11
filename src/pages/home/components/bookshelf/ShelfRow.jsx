@@ -6,8 +6,8 @@ const ShelfDivider = () => {
 
 export default function ShelfRow({ books }) {
   return (
-    <div className='flex flex-col items-center'>
-      <div className='mb-1 flex items-center gap-4'>
+    <div className='flex flex-col'>
+      <div className='mb-1 flex h-35 items-center gap-4'>
         {books.map(book => (
           <BookItem key={book.id} book={book} />
         ))}
