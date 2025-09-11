@@ -24,13 +24,14 @@ export default function NewsSummaryPage() {
 
   const getSummaryData = async () => {
     try {
+      setIsLoading(true);
       const response = await fetchSummaryById(id);
       setSummaryData(response);
       setScenes(response.scenes);
+      setIsLoading(false);
     } catch (error) {
       console.error('Error fetching summary data:', error);
       setIsError(true);
-    } finally {
       setIsLoading(false);
     }
   };
@@ -96,9 +97,12 @@ export default function NewsSummaryPage() {
               내일도 새로운 소식으로 찾아올게요.
             </p>
           </div>
+        ) : isLoading ? (
+          <Loading />
         ) : (
           <StoryCard
             key={currentPage}
+            image={currentNews.imageUrl}
             title={summaryData.title}
             description={currentNews.text}
             ttsUrl={currentNews.ttsUrl}
