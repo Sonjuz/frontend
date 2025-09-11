@@ -27,7 +27,7 @@ export default function CallScreen({ simuationData, onNext }) {
       />
 
       <div
-        className={`${simuationData[currentMessageIndex].sender === 'scammer' ? 'bg-sjz-red-main' : 'bg-sjz-blue'} relative h-64 w-full rounded-3xl p-6`}
+        className={`${simuationData[currentMessageIndex].sender === 'scammer' ? 'bg-sjz-red-main' : 'bg-sjz-blue'} relative h-80 w-full rounded-3xl`}
       >
         <div
           className={`absolute -top-2 left-1/2 size-4 -translate-x-1/2 rotate-45 ${simuationData[currentMessageIndex].sender === 'scammer' ? 'bg-sjz-red-main' : 'bg-sjz-blue'}`}

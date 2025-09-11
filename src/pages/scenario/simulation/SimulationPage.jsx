@@ -18,7 +18,7 @@ const SimulationHeader = () => {
     navigate(`/scenario/${id}`);
   };
   return (
-    <div className='flex w-full items-center p-4'>
+    <div className='flex w-full items-center'>
       <button onClick={handleBack} className='mr-2'>
         <img
           src='/icons/back-btn.svg'
@@ -68,7 +68,7 @@ export default function SimulationPage() {
 
   const handleSelect = choice => {
     handleNext();
-    if (choice.is_correct) {
+    if (choice.isCorrect) {
       setScore(prev => prev + 1);
     }
   };
@@ -97,6 +97,7 @@ export default function SimulationPage() {
       currentStep < stepsLength &&
       simuationStepsData[currentStep].screen_type === 'choice'
     ) {
+      console.log(simuationStepsData[currentStep]);
       setTotalChoice(prev => prev + 1);
     }
   }, [currentStep]);
@@ -126,7 +127,7 @@ export default function SimulationPage() {
   }
 
   return (
-    <div className='flex h-full flex-col items-center justify-between bg-gray-50 p-6'>
+    <div className='flex h-full flex-col items-center bg-gray-50 p-4'>
       {simuationStepsData &&
         (() => {
           const isSimulationEnd = stepsLength === currentStep;

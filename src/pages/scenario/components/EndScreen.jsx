@@ -1,5 +1,5 @@
 import { Button } from '../../../components/Button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ScoreItem = ({ value, label, color }) => (
   <div className='flex w-32 flex-col items-center gap-1'>
@@ -29,6 +29,7 @@ export default function EndScreen({ correctCount, totalCount, percentage }) {
   const navigate = useNavigate();
   const roundedPercentage = Math.round(percentage);
   const isPassed = roundedPercentage >= 50;
+  const { id } = useParams();
 
   return (
     <div className='flex h-full w-full flex-col items-center gap-8 p-6'>
@@ -63,7 +64,7 @@ export default function EndScreen({ correctCount, totalCount, percentage }) {
       {/* 버튼 그룹 */}
       <div className='mt-auto flex w-full flex-col gap-4'>
         <ActionButton
-          onClick={() => navigate('/news')}
+          onClick={() => navigate(`/news/${id}`)}
           icon='/icons/speaker.svg'
           variant='red'
         >
