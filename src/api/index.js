@@ -10,10 +10,7 @@ export const registerProfile = async profileData => {
   form.append('familyRelation', familyRelation);
 
   try {
-    const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/profile/upload`,
-      form
-    );
+    const response = await axios.post(`/api/profile/upload`, form);
     return response.data;
   } catch (error) {
     throw new Error(error);
@@ -22,9 +19,7 @@ export const registerProfile = async profileData => {
 
 export const fetchAllSimulations = async () => {
   try {
-    const response = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/v1/book`
-    );
+    const response = await axios.get(`/api/v1/book`);
     return response.data.data;
   } catch (error) {
     throw new Error(error);
@@ -33,9 +28,7 @@ export const fetchAllSimulations = async () => {
 
 export const fetchSimulationById = async id => {
   try {
-    const response = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/v1/book/${id}/simulation`
-    );
+    const response = await axios.get(`/api/v1/book/${id}/simulation`);
     return response.data.data;
   } catch (error) {
     throw new Error(error);
@@ -45,12 +38,9 @@ export const fetchSimulationById = async id => {
 export const fetchSummaryById = async id => {
   const voiceId = localStorage.getItem('profile_url');
   try {
-    const response = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/v1/book/${id}/summary`,
-      {
-        params: { voiceId: voiceId || '' },
-      }
-    );
+    const response = await axios.get(`/api/v1/book/${id}/summary`, {
+      params: { voiceId: voiceId || '' },
+    });
     return response.data.data;
   } catch (error) {
     console.error(error);
