@@ -8,7 +8,7 @@ const RegisterPage = lazy(() => import('./pages/register/RegisterPage.jsx'));
 const ProfileRegisterPage = lazy(
   () => import('./pages/register/ProfileRegisterPage.jsx')
 );
-const NewsSummaryPage = lazy(() => import('./pages/News/NewsSummaryPage.jsx'));
+const NewsSummaryPage = lazy(() => import('./pages/news/NewsSummaryPage.jsx'));
 const ScenarioDetailPage = lazy(
   () => import('./pages/scenario/ScenarioDetailPage.jsx')
 );
